@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('peminjamans', \App\Http\Controllers\PeminjamanController::class);
     Route::patch('peminjamans/verify/{id}', [\App\Http\Controllers\PeminjamanController::class, 'verify'])->name('peminjamans.verify');
     Route::patch('peminjamans/reject/{id}', [\App\Http\Controllers\PeminjamanController::class, 'reject'])->name('peminjamans.reject');
+    Route::get('cetak-peminjaman', [\App\Http\Controllers\PdfController::class, 'peminjaman'])->name('cetak-peminjaman');
 });
 
 Route::middleware('auth')->group(function () {
