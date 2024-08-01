@@ -45,6 +45,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::resource('pengembalians', \App\Http\Controllers\PengembalianController::class);
+});
+
+Route::middleware('auth')->group(function () {
     Route::resource('perubahanjadwals', \App\Http\Controllers\PerubahanJadwalController::class);
     Route::patch('perubahanjadwals/verify/{id}', [\App\Http\Controllers\PerubahanJadwalController::class, 'verify'])->name('perubahanjadwals.verify');
     Route::patch('perubahanjadwals/reject/{id}', [\App\Http\Controllers\PerubahanJadwalController::class, 'reject'])->name('perubahanjadwals.reject');
