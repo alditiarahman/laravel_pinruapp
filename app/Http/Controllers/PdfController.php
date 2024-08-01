@@ -6,6 +6,7 @@ use App\Models\Pembatalan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
+use App\Models\PenilaianPetugas;
 use App\Models\PenilaianRuangan;
 use App\Models\PerubahanJadwal;
 
@@ -89,5 +90,21 @@ class PdfController extends Controller
         $nama_jam = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('h:i:s'), 6, 2);
 
         return $report->stream('Laporan Data Penilaian Ruangan ' . $nama_tgl . '_' . $nama_jam . '.pdf');
+    }
+
+    public function penilaianpetugas()
+    {
+        $penilaianpetugas = PenilaianPetugas::with(['petugas'])->get();
+        $data = [
+            'penilaianpetugas' => $penilaianpetugas,
+            'tanggal' => date('d F Y'),
+            'judul' => 'Laporan Data Penilaian Petugas'
+        ];
+
+        $report = PDF::loadView('penilaianpetugas.print', $data)->setPaper('A4', 'potrait');
+        $nama_tgl = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('d/m/y'), 6, 2);
+        $nama_jam = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('h:i:s'), 6, 2);
+
+        return $report->stream('Laporan Data Penilaian Petugas ' . $nama_tgl . '_' . $nama_jam . '.pdf');
     }
 }
