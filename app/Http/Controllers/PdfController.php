@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BarangRusak;
 use App\Models\Maintenance;
 use App\Models\Pembatalan;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -123,5 +124,21 @@ class PdfController extends Controller
         $nama_jam = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('h:i:s'), 6, 2);
 
         return $report->stream('Laporan Data Maintenance ' . $nama_tgl . '_' . $nama_jam . '.pdf');
+    }
+
+    public function barangrusak()
+    {
+        $barangrusak = BarangRusak::with(['ruangan'])->get();
+        $data = [
+            'barangrusak' => $barangrusak,
+            'tanggal' => date('d F Y'),
+            'judul' => 'Laporan Data Barang Rusak'
+        ];
+
+        $report = PDF::loadView('barangrusak.print', $data)->setPaper('A4', 'potrait');
+        $nama_tgl = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('d/m/y'), 6, 2);
+        $nama_jam = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('h:i:s'), 6, 2);
+
+        return $report->stream('Laporan Data Barang Rusak ' . $nama_tgl . '_' . $nama_jam . '.pdf');
     }
 }
