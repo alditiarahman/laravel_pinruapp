@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('pengembalians', \App\Http\Controllers\PengembalianController::class);
+    Route::get('cetak-pengembalian', [\App\Http\Controllers\PdfController::class, 'pengembalian'])->name('cetak-pengembalian');
 });
 
 Route::middleware('auth')->group(function () {
