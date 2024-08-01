@@ -45,6 +45,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::resource('pembatalans', \App\Http\Controllers\PembatalanController::class);
+});
+
+Route::middleware('auth')->group(function () {
     Route::resource('pengembalians', \App\Http\Controllers\PengembalianController::class);
 });
 
