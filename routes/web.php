@@ -70,4 +70,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('penilaianruangans', \App\Http\Controllers\PenilaianRuanganController::class);
 });
 
+Route::middleware('auth')->group(function () {
+    Route::resource('penilaianpetugas', \App\Http\Controllers\PenilaianPetugasController::class);
+});
+
 require __DIR__ . '/auth.php';
