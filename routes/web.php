@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('penilaianruangans', \App\Http\Controllers\PenilaianRuanganController::class);
+    Route::get('cetak-penilaianruangan', [\App\Http\Controllers\PdfController::class, 'penilaianruangan'])->name('cetak-penilaianruangan');
 });
 
 Route::middleware('auth')->group(function () {
