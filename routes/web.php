@@ -68,6 +68,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('maintenances', \App\Http\Controllers\MaintenanceController::class);
+    Route::get('cetak-maintenance', [\App\Http\Controllers\PdfController::class, 'maintenance'])->name('cetak-maintenance');
 });
 
 Route::middleware('auth')->group(function () {
