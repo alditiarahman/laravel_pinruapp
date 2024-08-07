@@ -1,7 +1,8 @@
 <aside class="z-20 hidden w-64 overflow-y-auto bg-white md:block flex-shrink-0">
     <div class="py-4 text-gray-500">
-        <a class="ml-6 text-lg font-bold text-gray-800" href="{{ route('dashboard') }}">
-            Bawaslu
+        <a class="flex items-center ml-6 text-lg font-bold " href="{{ route('dashboard') }}">
+            <img src="{{ asset('images/logokalsel.png') }}" alt="Logo Kalsel" width="45" height="45">
+            <span class="ml-4 text-black">Bawaslu</span>
         </a>
 
         <ul class="mt-6">

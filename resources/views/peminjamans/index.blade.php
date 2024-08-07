@@ -50,15 +50,16 @@
                         d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
                 </svg>
             </a>
-            <a href="{{ route('peminjamans.create') }}"
-                class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-500 border border-transparent rounded-lg active:bg-pruple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                x-show="('{{ auth()->user()->hasRole('peminjam') }}')">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                    <path fill-rule="evenodd"
-                        d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                        clip-rule="evenodd" />
-                </svg>
-            </a>
+            @if (auth()->user()->hasRole('peminjam'))
+                <a href="{{ route('peminjamans.create') }}"
+                    class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-500 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path fill-rule="evenodd"
+                            d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+            @endif
         </div>
 
         <div class="overflow-hidden
@@ -128,216 +129,226 @@
                                                     clip-rule="evenodd" />
                                             </svg>
                                         </a>
-                                        <a href="{{ route('peminjamans.edit', $pinjam->id) }}"
-                                            class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple"
-                                            x-show="('{{ auth()->user()->hasRole('peminjam') }}' && '{{ $pinjam->status }}' === 'menunggu' || '{{ $pinjam->status }}' === 'ditolak')">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="currentColor" class="size-6">
-                                                <path
-                                                    d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
-                                            </svg>
-                                        </a>
+                                        @if (auth()->user()->hasRole('peminjam') && $pinjam->status === 'menunggu')
+                                            <a href="{{ route('peminjamans.edit', $pinjam->id) }}"
+                                                class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    fill="currentColor" class="size-6">
+                                                    <path
+                                                        d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                                                </svg>
+                                            </a>
+                                        @endif
                                         <!-- Modal Trigger DELETE -->
                                         <div x-data="{ openDelete: false }" class="inline">
                                             <!-- DELETE BTN -->
-                                            <button @click="openDelete = true"
-                                                class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple"
-                                                x-show="('{{ auth()->user()->hasRole('peminjam') }}' && '{{ $pinjam->status }}' === 'menunggu')">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                    fill="currentColor" class="size-6">
-                                                    <path fill-rule="evenodd"
-                                                        d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                            </button>
+                                            @if (auth()->user()->hasRole('peminjam') && ($pinjam->status === 'menunggu' || $pinjam->status === 'ditolak'))
+                                                <button @click="openDelete = true"
+                                                    class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" class="size-6">
+                                                        <path fill-rule="evenodd"
+                                                            d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            @endif
 
                                             <!-- Delete Modal -->
-                                            <div x-show="openDelete"
-                                                x-transition:enter="transition ease-out duration-150"
-                                                x-transition:enter-start="opacity-0"
-                                                x-transition:enter-end="opacity-100"
-                                                x-transition:leave="transition ease-in duration-150"
-                                                x-transition:leave-start="opacity-100"
-                                                x-transition:leave-end="opacity-0"
-                                                class="fixed inset-0 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+                                            @if (auth()->user()->hasRole('peminjam') && ($pinjam->status === 'menunggu' || $pinjam->status === 'ditolak'))
                                                 <div x-show="openDelete"
                                                     x-transition:enter="transition ease-out duration-150"
-                                                    x-transition:enter-start="opacity-0 transform translate-y-1/2"
-                                                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                                                    x-transition:enter-start="opacity-0"
+                                                    x-transition:enter-end="opacity-100"
                                                     x-transition:leave="transition ease-in duration-150"
-                                                    x-transition:leave-start="opacity-100 transform translate-y-0"
-                                                    x-transition:leave-end="opacity-0 transform translate-y-1/2"
-                                                    @click.away="openDelete = false"
-                                                    @keydown.escape="openDelete = false"
-                                                    class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg sm:rounded-lg sm:m-4 sm:max-w-xl"
-                                                    role="dialog" id="modal">
-                                                    <!-- Modal body -->
-                                                    <div class="mt-4 mb-6">
-                                                        <!-- Modal title -->
-                                                        <p class="mb-2 text-lg font-semibold text-gray-700">
-                                                            Hapus Data
-                                                        </p>
-                                                        <!-- Modal description -->
-                                                        <p class="text-sm text-gray-700">
-                                                            Apakah Anda yakin ingin menghapus data <span
-                                                                class="font-semibold">{{ $pinjam->nama_peminjam }}</span>?
-                                                        </p>
-                                                    </div>
-                                                    <footer
-                                                        class="flex flex-col items-center justify-end space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
-                                                        <button @click="openDelete = false"
-                                                            class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
-                                                            Batal
-                                                        </button>
-                                                        <form action="{{ route('peminjamans.destroy', $pinjam->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
-                                                                Hapus
+                                                    x-transition:leave-start="opacity-100"
+                                                    x-transition:leave-end="opacity-0"
+                                                    class="fixed inset-0 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+                                                    <div x-show="openDelete"
+                                                        x-transition:enter="transition ease-out duration-150"
+                                                        x-transition:enter-start="opacity-0 transform translate-y-1/2"
+                                                        x-transition:enter-end="opacity-100 transform translate-y-0"
+                                                        x-transition:leave="transition ease-in duration-150"
+                                                        x-transition:leave-start="opacity-100 transform translate-y-0"
+                                                        x-transition:leave-end="opacity-0 transform translate-y-1/2"
+                                                        @click.away="openDelete = false"
+                                                        @keydown.escape="openDelete = false"
+                                                        class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg sm:rounded-lg sm:m-4 sm:max-w-xl"
+                                                        role="dialog" id="modal">
+                                                        <!-- Modal body -->
+                                                        <div class="mt-4 mb-6">
+                                                            <!-- Modal title -->
+                                                            <p class="mb-2 text-lg font-semibold text-gray-700">
+                                                                Hapus Data
+                                                            </p>
+                                                            <!-- Modal description -->
+                                                            <p class="text-sm text-gray-700">
+                                                                Apakah Anda yakin ingin menghapus data <span
+                                                                    class="font-semibold">{{ $pinjam->nama_peminjam }}</span>?
+                                                            </p>
+                                                        </div>
+                                                        <footer
+                                                            class="flex flex-col items-center justify-end space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
+                                                            <button @click="openDelete = false"
+                                                                class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
+                                                                Batal
                                                             </button>
-                                                        </form>
-                                                    </footer>
+                                                            <form
+                                                                action="{{ route('peminjamans.destroy', $pinjam->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
+                                                                    Hapus
+                                                                </button>
+                                                            </form>
+                                                        </footer>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                         </div>
 
                                         <!-- Modal Trigger VERIFY -->
                                         <div x-data="{ openVerify: false }" class="inline">
                                             <!-- VERIFY Trigger -->
-                                            <button @click="openVerify = true"
-                                                class="flex items-center px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-                                                x-show="('{{ auth()->user()->hasRole('admin') }}' && '{{ auth()->user()->hasRole('operator') }}' && '{{ $pinjam->status }}' === 'menunggu')">
-                                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linecap="round"
-                                                        stroke-linejoin="round" stroke-width="2"
-                                                        d="M5 11.917L9.724 16.5 19 7.5" />
-                                                </svg>
-                                            </button>
+                                            @if (auth()->user()->hasAnyRole(['admin', 'operator']) && $pinjam->status === 'menunggu')
+                                                <button @click="openVerify = true"
+                                                    class="px-2 py-2 text-sm font-medium leading-5 text-purple-500 hover:text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600 hover:bg-green-500 focus:outline-none focus:shadow-outline-purple">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" class="size-6">
+                                                        <path fill-rule="evenodd"
+                                                            d="M19.916 4.626a.75.75 0 0 1 .208 1.04l-9 13.5a.75.75 0 0 1-1.154.114l-6-6a.75.75 0 0 1 1.06-1.06l5.353 5.353 8.493-12.74a.75.75 0 0 1 1.04-.207Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            @endif
 
                                             <!-- Verify Modal -->
-                                            <div x-show="openVerify"
-                                                x-transition:enter="transition ease-out duration-150"
-                                                x-transition:enter-start="opacity-0"
-                                                x-transition:enter-end="opacity-100"
-                                                x-transition:leave="transition ease-in duration-150"
-                                                x-transition:leave-start="opacity-100"
-                                                x-transition:leave-end="opacity-0"
-                                                class="fixed inset-0 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+                                            @if (auth()->user()->hasAnyRole(['admin', 'operator']) && $pinjam->status === 'menunggu')
                                                 <div x-show="openVerify"
                                                     x-transition:enter="transition ease-out duration-150"
-                                                    x-transition:enter-start="opacity-0 transform translate-y-1/2"
-                                                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                                                    x-transition:enter-start="opacity-0"
+                                                    x-transition:enter-end="opacity-100"
                                                     x-transition:leave="transition ease-in duration-150"
-                                                    x-transition:leave-start="opacity-100 transform translate-y-0"
-                                                    x-transition:leave-end="opacity-0 transform translate-y-1/2"
-                                                    @click.away="openVerify = false"
-                                                    @keydown.escape="openVerify = false"
-                                                    class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg sm:rounded-lg sm:m-4 sm:max-w-xl"
-                                                    role="dialog" id="modal">
-                                                    <!-- Modal body -->
-                                                    <div class="mt-4 mb-6">
-                                                        <!-- Modal title -->
-                                                        <p class="mb-2 text-lg font-semibold text-gray-700">
-                                                            Confirm Verification
-                                                        </p>
-                                                        <!-- Modal description -->
-                                                        <p class="text-sm text-gray-700">
-                                                            Are you sure you want to verify <span
-                                                                class="font-semibold">{{ $pinjam->nama_peminjam }}</span>?
-                                                        </p>
-                                                    </div>
-                                                    <footer
-                                                        class="flex flex-col items-center justify-end space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
-                                                        <button @click="openVerify = false"
-                                                            class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
-                                                            Cancel
-                                                        </button>
-                                                        <form action="{{ route('peminjamans.verify', $pinjam->id) }}"
-                                                            method="POST" class="inline">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <button type="submit"
-                                                                class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
-                                                                Verify
+                                                    x-transition:leave-start="opacity-100"
+                                                    x-transition:leave-end="opacity-0"
+                                                    class="fixed inset-0 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+                                                    <div x-show="openVerify"
+                                                        x-transition:enter="transition ease-out duration-150"
+                                                        x-transition:enter-start="opacity-0 transform translate-y-1/2"
+                                                        x-transition:enter-end="opacity-100 transform translate-y-0"
+                                                        x-transition:leave="transition ease-in duration-150"
+                                                        x-transition:leave-start="opacity-100 transform translate-y-0"
+                                                        x-transition:leave-end="opacity-0 transform translate-y-1/2"
+                                                        @click.away="openVerify = false"
+                                                        @keydown.escape="openVerify = false"
+                                                        class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg sm:rounded-lg sm:m-4 sm:max-w-xl"
+                                                        role="dialog" id="modal">
+                                                        <!-- Modal body -->
+                                                        <div class="mt-4 mb-6">
+                                                            <!-- Modal title -->
+                                                            <p class="mb-2 text-lg font-semibold text-gray-700">
+                                                                Confirm Verification
+                                                            </p>
+                                                            <!-- Modal description -->
+                                                            <p class="text-sm text-gray-700">
+                                                                Are you sure you want to verify <span
+                                                                    class="font-semibold">{{ $pinjam->nama_peminjam }}</span>?
+                                                            </p>
+                                                        </div>
+                                                        <footer
+                                                            class="flex flex-col items-center justify-end space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
+                                                            <button @click="openVerify = false"
+                                                                class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
+                                                                Cancel
                                                             </button>
-                                                        </form>
-                                                    </footer>
+                                                            <form
+                                                                action="{{ route('peminjamans.verify', $pinjam->id) }}"
+                                                                method="POST" class="inline">
+                                                                @csrf
+                                                                @method('PATCH')
+                                                                <button type="submit"
+                                                                    class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
+                                                                    Verify
+                                                                </button>
+                                                            </form>
+                                                        </footer>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                         </div>
 
 
                                         <!-- Modal Trigger REJECT -->
                                         <div x-data="{ openReject: false }" class="inline">
                                             <!-- REJECT Trigger -->
-                                            <button @click="openReject = true"
-                                                class="flex items-center px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
-                                                x-show="('{{ auth()->user()->hasRole('admin') }}' && '{{ auth()->user()->hasRole('operator') }}' && '{{ $pinjam->status }}' === 'menunggu')">
-                                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linecap="round"
-                                                        stroke-linejoin="round" stroke-width="2"
-                                                        d="M6 18L18 6M6 6l12 12" />
-                                                </svg>
-                                            </button>
+                                            @if (auth()->user()->hasAnyRole(['admin', 'operator']) && $pinjam->status === 'menunggu')
+                                                <button @click="openReject = true"
+                                                    class="px-2 py-2 text-sm font-medium leading-5 text-purple-500 hover:text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600 hover:bg-red-500 focus:outline-none focus:shadow-outline-purple">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" class="size-6">
+                                                        <path fill-rule="evenodd"
+                                                            d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            @endif
 
                                             <!-- Reject Modal -->
-                                            <div x-show="openReject"
-                                                x-transition:enter="transition ease-out duration-150"
-                                                x-transition:enter-start="opacity-0"
-                                                x-transition:enter-end="opacity-100"
-                                                x-transition:leave="transition ease-in duration-150"
-                                                x-transition:leave-start="opacity-100"
-                                                x-transition:leave-end="opacity-0"
-                                                class="fixed inset-0 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+                                            @if (auth()->user()->hasAnyRole(['admin', 'operator']) && $pinjam->status === 'menunggu')
                                                 <div x-show="openReject"
                                                     x-transition:enter="transition ease-out duration-150"
-                                                    x-transition:enter-start="opacity-0 transform translate-y-1/2"
-                                                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                                                    x-transition:enter-start="opacity-0"
+                                                    x-transition:enter-end="opacity-100"
                                                     x-transition:leave="transition ease-in duration-150"
-                                                    x-transition:leave-start="opacity-100 transform translate-y-0"
-                                                    x-transition:leave-end="opacity-0 transform translate-y-1/2"
-                                                    @click.away="openReject = false"
-                                                    @keydown.escape="openReject = false"
-                                                    class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg sm:rounded-lg sm:m-4 sm:max-w-xl"
-                                                    role="dialog" id="modal">
-                                                    <!-- Modal body -->
-                                                    <div class="mt-4 mb-6">
-                                                        <!-- Modal title -->
-                                                        <p class="mb-2 text-lg font-semibold text-gray-700">
-                                                            Confirm Rejection
-                                                        </p>
-                                                        <!-- Modal description -->
-                                                        <p class="text-sm text-gray-700">
-                                                            Are you sure you want to reject <span
-                                                                class="font-semibold">{{ $pinjam->nama_peminjam }}</span>
-                                                            ?
-                                                        </p>
-                                                        <!-- Input for rejection note -->
-                                                        <form action="{{ route('peminjamans.reject', $pinjam->id) }}"
-                                                            method="POST" class="mt-4">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <footer
-                                                                class="flex flex-col items-center justify-end space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
-                                                                <button @click="openReject = false" type="button"
-                                                                    class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
-                                                                    Cancel
-                                                                </button>
-                                                                <button type="submit"
-                                                                    class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
-                                                                    Reject
-                                                                </button>
-                                                            </footer>
-                                                        </form>
+                                                    x-transition:leave-start="opacity-100"
+                                                    x-transition:leave-end="opacity-0"
+                                                    class="fixed inset-0 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+                                                    <div x-show="openReject"
+                                                        x-transition:enter="transition ease-out duration-150"
+                                                        x-transition:enter-start="opacity-0 transform translate-y-1/2"
+                                                        x-transition:enter-end="opacity-100 transform translate-y-0"
+                                                        x-transition:leave="transition ease-in duration-150"
+                                                        x-transition:leave-start="opacity-100 transform translate-y-0"
+                                                        x-transition:leave-end="opacity-0 transform translate-y-1/2"
+                                                        @click.away="openReject = false"
+                                                        @keydown.escape="openReject = false"
+                                                        class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg sm:rounded-lg sm:m-4 sm:max-w-xl"
+                                                        role="dialog" id="modal">
+                                                        <!-- Modal body -->
+                                                        <div class="mt-4 mb-6">
+                                                            <!-- Modal title -->
+                                                            <p class="mb-2 text-lg font-semibold text-gray-700">
+                                                                Confirm Rejection
+                                                            </p>
+                                                            <!-- Modal description -->
+                                                            <p class="text-sm text-gray-700">
+                                                                Are you sure you want to reject <span
+                                                                    class="font-semibold">{{ $pinjam->nama_peminjam }}</span>?
+                                                            </p>
+                                                            <!-- Input for rejection note -->
+                                                            <form
+                                                                action="{{ route('peminjamans.reject', $pinjam->id) }}"
+                                                                method="POST" class="mt-4">
+                                                                @csrf
+                                                                @method('PATCH')
+                                                                <footer
+                                                                    class="flex flex-col items-center justify-end space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
+                                                                    <button @click="openReject = false" type="button"
+                                                                        class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
+                                                                        Cancel
+                                                                    </button>
+                                                                    <button type="submit"
+                                                                        class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
+                                                                        Reject
+                                                                    </button>
+                                                                </footer>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </td>

@@ -107,6 +107,7 @@
                     <th class="text-center align-middle">Nama Peminjam</th>
                     <th class="text-center align-middle">Tanggal Pinjam</th>
                     <th class="text-center align-middle">Tanggal Pengembalian</th>
+                    <th class="text-center align-middle">Jumlah Hari</th>
                 </tr>
             </thead>
             <tbody>
@@ -119,6 +120,7 @@
                     <td class="text-center align-middle"><?php echo $data->peminjaman->peminjam->name; ?></td>
                     <td class="text-center align-middle"><?php echo $data->peminjaman->tanggal_pinjam; ?></td>
                     <td class="text-center align-middle"><?php echo $data->tanggal_pengembalian; ?></td>
+                    <td class="text-center align-middle"><?php echo $data->jumlah_hari; ?></td>
                 </tr>
 
                 <?php $no++;

@@ -9,8 +9,9 @@
     x-transition:leave-end="opacity-0 transform -translate-x-20" @click.outside="closeSideMenu"
     @keydown.escape="closeSideMenu">
     <div class="py-4 text-gray-500 dark:text-gray-400">
-        <a class="ml-6 text-lg font-bold text-gray-800" href="{{ route('dashboard') }}">
-            Windmill
+        <a class="flex items-center ml-6 text-lg font-bold " href="{{ route('dashboard') }}">
+            <img src="{{ asset('images/logokalsel.png') }}" alt="Logo Kalsel" width="45" height="45">
+            <span class="ml-4 text-black">Bawaslu</span>
         </a>
         <ul class="mt-6">
             <li class="relative px-6 py-3">

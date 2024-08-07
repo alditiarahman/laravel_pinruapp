@@ -6,6 +6,7 @@ use App\Models\Pengembalian;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PengembalianController extends Controller
 {
@@ -24,6 +25,13 @@ class PengembalianController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(10);
         }
+
+        foreach ($pengembalian as $kembali) {
+            $tanggalpinjam = Carbon::parse($kembali->peminjaman->tanggal_pinjam);
+            $tanggalpengembalian = Carbon::parse($kembali->tanggal_pengembalian);
+            $kembali->jumlah_hari = $tanggalpinjam->diffInDays($tanggalpengembalian);
+        }
+
         return view('pengembalians.index', compact('pengembalian'));
     }
 
@@ -76,6 +84,11 @@ class PengembalianController extends Controller
 
         // Ambil data pengembalian berdasarkan ID
         $pengembalian = Pengembalian::with(['peminjaman.ruangan', 'peminjaman.peminjam', 'peminjaman.petugas'])->findOrFail($id);
+
+        // Menghitung jumlah hari
+        $tanggalpinjam = Carbon::parse($pengembalian->peminjaman->tanggal_pinjam);
+        $tanggalpengembalian = Carbon::parse($pengembalian->tanggal_pengembalian);
+        $pengembalian->jumlah_hari = $tanggalpinjam->diffInDays($tanggalpengembalian);
 
         if ($request->ajax()) {
             return response()->json($pengembalian);

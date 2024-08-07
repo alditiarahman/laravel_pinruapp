@@ -72,6 +72,7 @@
                             <th class="px-4 py-3">Nama Peminjam</th>
                             <th class="px-4 py-3">Tanggal Pinjam</th>
                             <th class="px-4 py-3">Tanggal Pengembalian</th>
+                            <th class="px-4 py-3">Jumlah Hari</th>
                             <th class="px-4 py-3">Action</th>
                         </tr>
                     </thead>
@@ -89,6 +90,9 @@
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     {{ $kembali->tanggal_pengembalian }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $kembali->jumlah_hari }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     <div class="flex justify-center space-x-2 items-center">

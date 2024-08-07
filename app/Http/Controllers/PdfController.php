@@ -11,6 +11,7 @@ use App\Models\Pengembalian;
 use App\Models\PenilaianPetugas;
 use App\Models\PenilaianRuangan;
 use App\Models\PerubahanJadwal;
+use Carbon\Carbon;
 
 class PdfController extends Controller
 {
@@ -49,6 +50,11 @@ class PdfController extends Controller
     public function pengembalian()
     {
         $pengembalian = Pengembalian::with(['peminjaman', 'peminjam'])->get();
+        foreach ($pengembalian as $data) {
+            $tanggalpinjam = Carbon::parse($data->peminjaman->tanggal_pinjam);
+            $tanggalpengembalian = Carbon::parse($data->tanggal_pengembalian);
+            $data->jumlah_hari = $tanggalpinjam->diffInDays($tanggalpengembalian);
+        }
         $data = [
             'pengembalian' => $pengembalian,
             'tanggal' => date('d F Y'),
