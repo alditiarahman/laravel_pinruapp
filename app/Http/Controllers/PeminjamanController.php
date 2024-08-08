@@ -36,8 +36,11 @@ class PeminjamanController extends Controller
         $request->validate([
             'id_ruangan' => 'required',
             'tanggal_pinjam' => 'required',
-            'surat_pernyataan' => 'required|file|mimes:pdf',
-            'surat_pernyataan' => 'max:2048', // 2MB
+            'nama_pj' => 'required',
+            'jabatan' => 'required',
+            'instansi' => 'required',
+            'nomor_identitas' => 'required',
+            'nomor_telepon' => 'required',
             'keperluan' => 'required',
         ]);
 
@@ -45,12 +48,11 @@ class PeminjamanController extends Controller
         $peminjaman->id_ruangan = $request->id_ruangan;
         $peminjaman->id_peminjam = auth()->id();
         $peminjaman->tanggal_pinjam = $request->tanggal_pinjam;
-
-        // Upload image
-        $file = $request->file('surat_pernyataan');
-        $file->storeAs('public/peminjamans', $file->hashName());
-        $peminjaman->surat_pernyataan = $file->hashName();
-
+        $peminjaman->nama_pj = $request->nama_pj;
+        $peminjaman->jabatan = $request->jabatan;
+        $peminjaman->instansi = $request->instansi;
+        $peminjaman->nomor_identitas = $request->nomor_identitas;
+        $peminjaman->nomor_telepon = $request->nomor_telepon;
         $peminjaman->keperluan = $request->keperluan;
 
         if ($peminjaman->save()) {
@@ -87,7 +89,11 @@ class PeminjamanController extends Controller
         $request->validate([
             'id_ruangan' => 'required',
             'tanggal_pinjam' => 'required',
-            'surat_pernyataan' => 'nullable|file|mimes:pdf|max:2048', // 2MB
+            'nama_pj' => 'required',
+            'jabatan' => 'required',
+            'instansi' => 'required',
+            'nomor_identitas' => 'required',
+            'nomor_telepon' => 'required',
             'keperluan' => 'required',
         ]);
 
@@ -95,19 +101,11 @@ class PeminjamanController extends Controller
         $peminjaman->id_ruangan = $request->id_ruangan;
         $peminjaman->id_peminjam = auth()->id();
         $peminjaman->tanggal_pinjam = $request->tanggal_pinjam;
-
-        if ($request->hasFile('surat_pernyataan')) {
-            // Delete the old file if it exists
-            if ($peminjaman->surat_pernyataan) {
-                Storage::delete('public/peminjamans/' . $peminjaman->surat_pernyataan);
-            }
-
-            // Upload new file
-            $file = $request->file('surat_pernyataan');
-            $file->storeAs('public/peminjamans', $file->hashName());
-            $peminjaman->surat_pernyataan = $file->hashName();
-        }
-
+        $peminjaman->nama_pj = $request->nama_pj;
+        $peminjaman->jabatan = $request->jabatan;
+        $peminjaman->instansi = $request->instansi;
+        $peminjaman->nomor_identitas = $request->nomor_identitas;
+        $peminjaman->nomor_telepon = $request->nomor_telepon;
         $peminjaman->keperluan = $request->keperluan;
 
         if ($peminjaman->save()) {

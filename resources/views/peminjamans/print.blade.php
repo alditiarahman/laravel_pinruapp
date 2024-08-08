@@ -118,11 +118,11 @@
                     <td class="text-center align-middle"><?php echo $data->ruangan->nama_ruangan; ?></td>
                     <td class="text-center align-middle"><?php echo $data->peminjam->name; ?></td>
                     <td class="text-center align-middle"><?php echo $data->tanggal_pinjam; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->petugas->name; ?></td>
+                    <td class="text-center align-middle"><?php echo $data->petugas ? $data->petugas->name : 'Belum Diverifikasi'; ?></td>
                     <td class="text-center align-middle"><?php echo $data->status; ?></td>
                     <td class="text-center align-middle"><?php echo $data->keperluan; ?></td>
                 </tr>
-                
+
                 <?php $no++;
         endforeach; ?>
             </tbody>

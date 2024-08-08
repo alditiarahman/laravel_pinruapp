@@ -103,6 +103,7 @@
                 <tr>
                     <th class="text-center align-middle">No</th>
                     <th class="text-center align-middle">Nama Ruangan</th>
+                    <th class="text-center align-middle">Tanggal Maintenance</th>
                     <th class="text-center align-middle">Status</th>
                 </tr>
             </thead>
@@ -112,6 +113,7 @@
                 <tr>
                     <td class="text-center align-middle"><?php echo $no; ?></td>
                     <td class="text-center align-middle"><?php echo $data->ruangan->nama_ruangan; ?></td>
+                    <td class="text-center align-middle"><?php echo $data->tanggal_maintenance; ?></td>
                     <td class="text-center align-middle"><?php echo $data->status; ?></td>
                 </tr>
 

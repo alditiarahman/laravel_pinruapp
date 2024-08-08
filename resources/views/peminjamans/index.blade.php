@@ -72,9 +72,7 @@
                             <th class="px-4 py-3">Nama Ruangan</th>
                             <th class="px-4 py-3">Nama Peminjam</th>
                             <th class="px-4 py-3">Tanggal Pinjam</th>
-                            <th class="px-4 py-3">Surat Pernyataan</th>
                             <th class="px-4 py-3">Status</th>
-                            <th class="px-4 py-3">Keperluan</th>
                             <th class="px-4 py-3">Action</th>
                         </tr>
                     </thead>
@@ -89,12 +87,6 @@
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     {{ $pinjam->tanggal_pinjam }}
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <a href="{{ asset('storage/peminjamans/' . $pinjam->surat_pernyataan) }}"
-                                        target="_blank"
-                                        class="block w-full px-3 py-2 mt-1 text-sm  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-blue-500">Lihat
-                                        Surat Pernyataan</a>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     @if ($pinjam->status == 'menunggu')
@@ -113,9 +105,6 @@
                                             Rejected
                                         </span>
                                     @endif
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $pinjam->keperluan }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     <div class="flex justify-center space-x-2 items-center">
