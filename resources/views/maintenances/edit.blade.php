@@ -6,21 +6,34 @@
     <div class="p-4 bg-white rounded-lg shadow-xs">
         <form action="{{ route('maintenances.update', $maintenance->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('PUT') <!-- Menentukan metode HTTP PUT -->
+            @method('PUT')
+
+            <!-- Nama Ruangan -->
+            <div>
+                <label for="id_ruangan" class="block text-sm font-medium text-gray-700">Nama Ruangan</label>
+                <select name="id_ruangan" id="id_ruangan"
+                    class="block w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="">Pilih Ruangan</option>
+                    @foreach ($ruangans as $ruangan)
+                        <option value="{{ $ruangan->id }}"
+                            {{ $maintenance->id_ruangan == $ruangan->id ? 'selected' : '' }}>
+                            {{ $ruangan->nama_ruangan }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('id_ruangan')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
             <div class="grid grid-cols-2 gap-6 mt-4">
-                <!-- Nama Ruangan -->
+                <!-- Tanggal Maintenance -->
                 <div>
-                    <label for="id_ruangan" class="block text-sm font-medium text-gray-700">Nama Ruangan</label>
-                    <select name="id_ruangan" id="id_ruangan"
-                        class="block w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="">Pilih Ruangan</option>
-                        @foreach ($ruangans as $ruangan)
-                            <option value="{{ $ruangan->id }}"
-                                {{ $ruangan->id == $maintenance->id_ruangan ? 'selected' : '' }}>
-                                {{ $ruangan->nama_ruangan }}</option>
-                        @endforeach
-                    </select>
-                    @error('id_ruangan')
+                    <label for="tanggal_maintenance" class="block text-sm font-medium text-gray-700">Tanggal
+                        Maintenance</label>
+                    <input type="date" name="tanggal_maintenance" id="tanggal_maintenance"
+                        value="{{ $maintenance->tanggal_maintenance }}"
+                        class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    @error('tanggal_maintenance')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>

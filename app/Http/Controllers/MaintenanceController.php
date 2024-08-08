@@ -33,11 +33,13 @@ class MaintenanceController extends Controller
     {
         $request->validate([
             'id_ruangan' => 'required',
+            'tanggal_maintenance' => 'required',
             'status' => 'required',
         ]);
 
         $maintenance = new Maintenance();
         $maintenance->id_ruangan = $request->id_ruangan;
+        $maintenance->tanggal_maintenance = $request->tanggal_maintenance;
         $maintenance->status = $request->status;
         if ($maintenance->save()) {
             return redirect()->route('maintenances.index')->with('success', 'Maintenance created successfully.');
@@ -75,10 +77,12 @@ class MaintenanceController extends Controller
 
         $request->validate([
             'id_ruangan' => 'required',
+            'tanggal_maintenance' => 'required',
             'status' => 'required',
         ]);
 
         $maintenance->id_ruangan = $request->id_ruangan;
+        $maintenance->tanggal_maintenance = $request->tanggal_maintenance;
         $maintenance->status = $request->status;
         if ($maintenance->save()) {
             return redirect()->route('maintenances.index')->with('success', 'Maintenance updated successfully.');

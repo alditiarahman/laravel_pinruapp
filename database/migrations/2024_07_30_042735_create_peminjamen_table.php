@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('peminjamen', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_pinjam');
-            $table->string('surat_pernyataan');
+            $table->string('nama_pj');
+            $table->string('jabatan');
+            $table->string('instansi');
+            $table->string('nomor_identitas');
+            $table->string('nomor_telepon');
             $table->enum('status', ['menunggu', 'disetujui', 'ditolak'])->default('menunggu');
             $table->text('keperluan');
             $table->unsignedBigInteger('id_ruangan');

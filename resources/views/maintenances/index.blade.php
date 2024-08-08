@@ -67,6 +67,7 @@
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 text-center uppercase bg-gray-50 border-b">
                             <th class="px-4 py-3">Nama Ruangan</th>
+                            <th class="px-4 py-3">Tanggal Maintenance</th>
                             <th class="px-4 py-3">Status</th>
                             <th class="px-4 py-3">Action</th>
                         </tr>
@@ -76,6 +77,9 @@
                             <tr class="text-gray-700 text-center">
                                 <td class="px-4 py-3 text-sm">
                                     {{ $mainten->ruangan->nama_ruangan }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $mainten->tanggal_maintenance }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     @if ($mainten->status == 'selesai')

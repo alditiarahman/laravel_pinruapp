@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal_maintenance');
             $table->enum('status', ['proses', 'selesai'])->default('proses');
             $table->unsignedBigInteger('id_ruangan');
             $table->foreign('id_ruangan')->references('id')->on('ruangans');

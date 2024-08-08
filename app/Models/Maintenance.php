@@ -10,6 +10,7 @@ class Maintenance extends Model
     use HasFactory;
 
     protected $fillable = [
+        'tanggal_maintenance',
         'status',
         'id_ruangan',
     ];
