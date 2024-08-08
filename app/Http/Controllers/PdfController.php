@@ -31,6 +31,25 @@ class PdfController extends Controller
         return $report->stream('Laporan Data Peminjaman ' . $nama_tgl . '_' . $nama_jam . '.pdf');
     }
 
+    public function peminjamanbyid($id)
+    {
+        $peminjaman = Peminjaman::with(['ruangan', 'peminjam', 'petugas'])->where('id', $id)->first();
+        $peminjamandata = Peminjaman::with(['ruangan', 'peminjam', 'petugas'])->where('id', $id)->get();
+        $data = [
+            'peminjaman' => $peminjaman,
+            'peminjamandata' => $peminjamandata,
+            'tanggal' => date('d F Y'),
+        ];
+
+        // $report = PDF::loadView('peminjamans.printbyid', $data)->setPaper('A4', 'potrait');
+        // $nama_tgl = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('d/m/y'), 6, 2);
+        // $nama_jam = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('h:i:s'), 6, 2);
+
+        // return $report->stream('Surat Peminjaman ' . $nama_tgl . '_' . $nama_jam . '.pdf');
+
+        return view('peminjamans.printbyid', $data);
+    }
+
     public function pembatalan()
     {
         $pembatalan = Pembatalan::with(['peminjaman', 'peminjam'])->get();
