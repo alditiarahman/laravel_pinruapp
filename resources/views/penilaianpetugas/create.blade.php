@@ -47,9 +47,9 @@
                 @enderror
             </div>
 
-            <div class="flex justify-end mt-4">
+            <div class="flex space-x-2 justify-end mt-4">
                 <button type="submit"
-                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
+                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-500 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                     Simpan
                 </button>
                 <a href="{{ route('penilaianpetugas.index') }}"

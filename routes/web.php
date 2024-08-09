@@ -83,6 +83,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('penilaianpetugas', \App\Http\Controllers\PenilaianPetugasController::class);
     Route::get('cetak-penilaianpetugas', [\App\Http\Controllers\PdfController::class, 'penilaianpetugas'])->name('cetak-penilaianpetugas');
+    Route::get('cetak-beritaacarapenilaianpetugas/{id}', [\App\Http\Controllers\PdfController::class, 'penilaianpetugasbyid'])->name('cetak-beritaacarapenilaianpetugas');
 });
 
 require __DIR__ . '/auth.php';

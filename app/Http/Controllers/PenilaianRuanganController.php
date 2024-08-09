@@ -33,7 +33,7 @@ class PenilaianRuanganController extends Controller
         $bulan = \Carbon\Carbon::now()->month;
         $bulan_romawi = $this->convertToRoman($bulan);
         $tahun = date('Y');
-        $nomor = sprintf('%03d/BAWASLU-BR/%s/%d', $increment, $bulan_romawi, $tahun);
+        $nomor = sprintf('%03d/BAWASLU-PR/%s/%d', $increment, $bulan_romawi, $tahun);
         return $nomor;
     }
 

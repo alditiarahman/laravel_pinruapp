@@ -3,10 +3,17 @@
 
 <head>
     <meta charset="utf-8">
-    <title>{{ $judul }}</title>
+    <title>Berita Acara Penilaian Petugas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
 
     <!-- Normalize or reset CSS with your favorite library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="{{ asset('/dist/js/normalize.min.css') }}">
+    <!-- Load paper.css for happy printing -->
+    <link rel="stylesheet" href="{{ asset('/css/paper.css') }}">
 
     <!-- Set page size here: A5, A4 or A3 -->
     <!-- Set also "landscape" if you need -->
@@ -34,6 +41,7 @@
 
         h1 {
             font-size: 18px;
+            text-decoration: underline;
             margin-top: 20px;
         }
 
@@ -51,7 +59,7 @@
             border: solid 1px #DDEEEE;
             color: #336B6B;
             padding: 10px;
-            text-align: center;
+            text-align: left;
             text-shadow: 1px 1px 1px #fff;
         }
 
@@ -59,71 +67,57 @@
             border: solid 1px #DDEEEE;
             color: #333;
             padding: 10px;
-            text-align: center;
             text-shadow: 1px 1px 1px #fff;
-        }
-
-        .table tbody tr {
-            page-break-inside: avoid;
-            /* Tambahkan ini */
-        }
-
-        .left-align {
-            text-align: left;
         }
     </style>
 </head>
 
-<body>
+<body class="A4 potrait">
     <section class="sheet">
         <!-- Header/Kop Surat -->
         <div class="header">
-
             <!-- Logo -->
-            <img src="{{ public_path('images/logo-bawaslu.png') }}" alt="LOGO BAWASLU"
-                style="width: 120px; height: auto; float: left; margin-right: 30px;">
-
-            <!-- Informasi Organisasi -->
-            <div class="left-align">
-                <h2 style="margin: 0; font-size: 18px;"><b>Badan Pengawas Pemilihan Umum Provinsi Kalimantan Selatan</b>
-                </h2>
-                <p style="margin: 5px 0;">Jl. RE Martadinata No.3, Kertak Baru Ilir, Kec. Banjarmasin Tengah,</p>
-                <p style="margin: 5px 0;">Kota Banjarmasin, Kalimantan Selatan 70231</p>
-                <p style="margin: 5px 0;">Telepon: (0511) 6726 437 | Email: set.kalsel@gmail.go.id</p>
-            </div>
+            <img src="{{ asset('images/logo-Kalsel.png') }}" alt="Logo"
+                style="width: 250px; height: auto; float: left; margin-right: 30px;">
             <!-- Clearfix untuk mengatasi float -->
             <div style="clear: both;"></div>
             <br>
             <hr style="border-top: 3px solid black; margin-top: 10px; margin-bottom: 10px;">
         </div>
 
-        <h1 style="text-align: center;">{{ $judul }}</h1>
-        <table class="table">
+        <h1 style="text-align: center; margin-bottom: 10px;"><b>BERITA ACARA PENILAIAN PETUGAS</b></h1>
+
+        <div class="content">
+            <div style="display: flex; justify-content: space-between;">
+                <div>Nomor : <b>{{ $penilaianpetugas->nomor_surat }}</b>
+                    <p>Prihal : Penilaian Petugas</p>
+                </div>
+            </div>
+
+            <table class="table">
             <thead>
                 <tr>
-                    <th class="text-center align-middle">No</th>
                     <th class="text-center align-middle">Nama Petugas</th>
                     <th class="text-center align-middle">Pelayanan</th>
                     <th class="text-center align-middle">Saran</th>
                 </tr>
             </thead>
             <tbody>
-                <?php $no = 1; ?>
-                <?php foreach ($penilaianpetugas as $data) : ?>
+                <?php foreach ($penilaianpetugasdata as $data) : ?>
                 <tr>
-                    <td class="text-center align-middle"><?php echo $no; ?></td>
                     <td class="text-center align-middle"><?php echo $data->petugas->name; ?></td>
                     <td class="text-center align-middle"><?php echo $data->pelayanan; ?></td>
                     <td class="text-center align-middle"><?php echo $data->saran; ?></td>
                 </tr>
 
-                <?php $no++;
+                <?php
         endforeach; ?>
             </tbody>
         </table>
-        <div style="margin-top: 20px;">
-            <div class="left-align" style="float: right; width: 45%;">
-                <p>
+        </div>
+        <div style="margin-top: 10px;">
+            <div style="float: right; width: 40%;">
+                <p class="text-center align-middle">
                     Banjarmasin,
                     <?php
                     // Array mapping English month names to Indonesian
@@ -148,17 +142,20 @@
                     }
                     echo $currentDate;
                     ?>
-                    <br>Mengetahui
+                    <br>Yang Mengetahui
                 </p>
                 <br>
                 <br>
-                <p class="left-align">
+                <p class="text-center align-middle">
+
                     <b><u>Aries Mardiono, M.Sos</u></b>
                 </p>
             </div>
         </div>
     </section>
-
+    <script type="text/javascript">
+        window.print();
+    </script>
 </body>
 
 </html>
