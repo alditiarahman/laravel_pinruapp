@@ -102,14 +102,26 @@ class PdfController extends Controller
         $data = [
             'penilaianruangan' => $penilaianruangan,
             'tanggal' => date('d F Y'),
-            'judul' => 'Laporan Data Penilaian Ruangan'
+            'judul' => 'Laporan Riwayat Penilaian Ruangan'
         ];
 
         $report = PDF::loadView('penilaianruangans.print', $data)->setPaper('A4', 'potrait');
         $nama_tgl = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('d/m/y'), 6, 2);
         $nama_jam = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('h:i:s'), 6, 2);
 
-        return $report->stream('Laporan Data Penilaian Ruangan ' . $nama_tgl . '_' . $nama_jam . '.pdf');
+        return $report->stream('Laporan Riwayat Penilaian Ruangan ' . $nama_tgl . '_' . $nama_jam . '.pdf');
+    }
+
+    public function penilaianruanganbyid($id)
+    {
+        $penilaianruangan = PenilaianRuangan::with(['ruangan', 'peminjam'])->where('id', $id)->first();
+        $penilaianruangandata = PenilaianRuangan::with(['ruangan', 'peminjam'])->where('id', $id)->get();
+        $data = [
+            'penilaianruangan' => $penilaianruangan,
+            'penilaianruangandata' => $penilaianruangandata,
+            'tanggal' => date('d F Y'),
+        ];
+        return view('penilaianruangans.printbyid', $data);
     }
 
     public function penilaianpetugas()

@@ -6,9 +6,8 @@
     <div class="p-4 bg-white rounded-lg shadow-xs">
         <form action="{{ route('penilaianruangans.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="grid grid-cols-2 gap-6 mt-4">
-                <!-- Nama Ruangan -->
-                <div>
+            <!-- Nama Ruangan -->
+                <div class="mt-4">
                     <label for="id_ruangan" class="block text-sm font-medium text-gray-700">Nama Ruangan</label>
                     <input type="text" name="id_ruangan" id="id_ruangan" readonly
                         class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -17,6 +16,7 @@
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+            <div class="grid grid-cols-2 gap-6 mt-4">
                 <!-- Peminjam -->
                 <div>
                     <label for="id_peminjam" class="block text-sm font-medium text-gray-700">Nama Peminjam</label>
@@ -24,19 +24,6 @@
                         class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         value="{{ $penilaianruangan->peminjam->name }}">
                     @error('id_peminjam')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-6 mt-4">
-                <!-- Tanggal Pinjam -->
-                <div>
-                    <label for="tanggal_pinjam" class="block text-sm font-medium text-gray-700">Tanggal Pinjam</label>
-                    <input value="{{ $penilaianruangan->tanggal_pinjam }}" type="text" name="tanggal_pinjam"
-                        id="tanggal_pinjam" autocomplete="off"
-                        class="block w-full px-3 py-2 mt-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        readonly>
-                    @error('tanggal_pinjam')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
