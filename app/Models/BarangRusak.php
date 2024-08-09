@@ -9,7 +9,7 @@ class BarangRusak extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama_barang', 'foto_barang', 'id_ruangan'];
+    protected $fillable = ['nomor_surat', 'nama_barang', 'foto_barang', 'id_ruangan'];
 
     public function ruangan()
     {

@@ -40,13 +40,6 @@ class PdfController extends Controller
             'peminjamandata' => $peminjamandata,
             'tanggal' => date('d F Y'),
         ];
-
-        // $report = PDF::loadView('peminjamans.printbyid', $data)->setPaper('A4', 'potrait');
-        // $nama_tgl = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('d/m/y'), 6, 2);
-        // $nama_jam = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('h:i:s'), 6, 2);
-
-        // return $report->stream('Surat Peminjaman ' . $nama_tgl . '_' . $nama_jam . '.pdf');
-
         return view('peminjamans.printbyid', $data);
     }
 
@@ -157,7 +150,7 @@ class PdfController extends Controller
         $data = [
             'barangrusak' => $barangrusak,
             'tanggal' => date('d F Y'),
-            'judul' => 'Laporan Data Barang Rusak'
+            'judul' => 'Laporan Riwayat Barang Rusak'
         ];
 
         $report = PDF::loadView('barangrusak.print', $data)->setPaper('A4', 'potrait');
@@ -165,5 +158,17 @@ class PdfController extends Controller
         $nama_jam = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('h:i:s'), 6, 2);
 
         return $report->stream('Laporan Data Barang Rusak ' . $nama_tgl . '_' . $nama_jam . '.pdf');
+    }
+
+    public function barangrusakbyid($id)
+    {
+        $barangrusak = BarangRusak::with(['ruangan'])->where('id', $id)->first();
+        $barangrusakdata = BarangRusak::with(['ruangan'])->where('id', $id)->get();
+        $data = [
+            'barangrusak' => $barangrusak,
+            'barangrusakdata' => $barangrusakdata,
+            'tanggal' => date('d F Y'),
+        ];
+        return view('barangrusak.printbyid', $data);
     }
 }

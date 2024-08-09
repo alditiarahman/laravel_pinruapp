@@ -18,6 +18,35 @@ class BarangRusakController extends Controller
         return view('barangrusak.index', compact('barangrusak'));
     }
 
+    public function nomor_surat()
+    {
+        $increment = BarangRusak::count() + 1;
+        $bulan = \Carbon\Carbon::now()->month;
+        $bulan_romawi = $this->convertToRoman($bulan);
+        $tahun = date('Y');
+        $nomor = sprintf('%03d/BAWASLU-BR/%s/%d', $increment, $bulan_romawi, $tahun);
+        return $nomor;
+    }
+
+    /**
+     * Convert number to roman
+     */
+    private function convertToRoman($number)
+    {
+        $map = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
+        $returnValue = '';
+        while ($number > 0) {
+            foreach ($map as $roman => $int) {
+                if ($number >= $int) {
+                    $number -= $int;
+                    $returnValue .= $roman;
+                    break;
+                }
+            }
+        }
+        return $returnValue;
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -44,6 +73,7 @@ class BarangRusakController extends Controller
 
         $barangrusak = new BarangRusak();
         $barangrusak->id_ruangan = $request->id_ruangan;
+        $barangrusak->nomor_surat = $this->nomor_surat();
         $barangrusak->nama_barang = $request->nama_barang;
         $barangrusak->foto_barang = $image->hashName();
 
