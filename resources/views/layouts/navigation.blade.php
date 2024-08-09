@@ -62,7 +62,7 @@
                 </x-nav-link>
             </li>
 
-            <li class="relative px-6 py-3">
+            {{-- <li class="relative px-6 py-3">
                 <x-nav-link href="{{ route('pembatalans.index') }}" :active="request()->routeIs('pembatalans.*')">
                     <x-slot name="icon">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
@@ -74,9 +74,9 @@
                     </x-slot>
                     {{ __('Pembatalan') }}
                 </x-nav-link>
-            </li>
+            </li> --}}
 
-            <li class="relative px-6 py-3">
+            {{-- <li class="relative px-6 py-3">
                 <x-nav-link href="{{ route('pengembalians.index') }}" :active="request()->routeIs('pengembalians.*')">
                     <x-slot name="icon">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
@@ -88,9 +88,9 @@
                     </x-slot>
                     {{ __('Pengembalian') }}
                 </x-nav-link>
-            </li>
+            </li> --}}
 
-            <li class="relative px-6 py-3">
+            {{-- <li class="relative px-6 py-3">
                 <x-nav-link href="{{ route('perubahanjadwals.index') }}" :active="request()->routeIs('perubahanjadwals.*')">
                     <x-slot name="icon">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
@@ -102,7 +102,7 @@
                     </x-slot>
                     {{ __('Perubahan Jadwal') }}
                 </x-nav-link>
-            </li>
+            </li> --}}
 
             <li class="relative px-6 py-3">
                 <x-nav-link href="{{ route('barangrusak.index') }}" :active="request()->routeIs('barangrusak.*')">
@@ -118,7 +118,7 @@
                 </x-nav-link>
             </li>
 
-            <li class="relative px-6 py-3">
+            {{-- <li class="relative px-6 py-3">
                 <x-nav-link href="{{ route('maintenances.index') }}" :active="request()->routeIs('maintenances.*')">
                     <x-slot name="icon">
                         <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
@@ -130,7 +130,7 @@
                     </x-slot>
                     {{ __('Maintenance') }}
                 </x-nav-link>
-            </li>
+            </li> --}}
 
             <li class="relative px-6 py-3">
                 <x-nav-link href="{{ route('penilaianruangans.index') }}" :active="request()->routeIs('penilaianruangans.*')">

@@ -21,14 +21,14 @@ class PdfController extends Controller
         $data = [
             'peminjaman' => $peminjaman,
             'tanggal' => date('d F Y'),
-            'judul' => 'Laporan Data Peminjaman'
+            'judul' => 'Laporan Riwayat Peminjaman'
         ];
 
         $report = PDF::loadView('peminjamans.print', $data)->setPaper('A4', 'potrait');
         $nama_tgl = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('d/m/y'), 6, 2);
         $nama_jam = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('h:i:s'), 6, 2);
 
-        return $report->stream('Laporan Data Peminjaman ' . $nama_tgl . '_' . $nama_jam . '.pdf');
+        return $report->stream('Laporan Riwayat Peminjaman ' . $nama_tgl . '_' . $nama_jam . '.pdf');
     }
 
     public function peminjamanbyid($id)

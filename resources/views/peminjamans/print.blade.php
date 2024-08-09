@@ -29,7 +29,7 @@
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         h1 {
@@ -104,7 +104,9 @@
                     <th class="text-center align-middle">No</th>
                     <th class="text-center align-middle">Nama Ruangan</th>
                     <th class="text-center align-middle">Nama Peminjam</th>
-                    <th class="text-center align-middle">Tanggal Pinjam</th>
+                    <th class="text-center align-middle">Tanggal Mulai</th>
+                    <th class="text-center align-middle">Tanggal Selesai</th>
+                    <th class="text-center align-middle">Jumlah Hari</th>
                     <th class="text-center align-middle">Disetujui Oleh</th>
                     <th class="text-center align-middle">Status</th>
                     <th class="text-center align-middle">Keperluan</th>
@@ -117,7 +119,9 @@
                     <td class="text-center align-middle"><?php echo $no; ?></td>
                     <td class="text-center align-middle"><?php echo $data->ruangan->nama_ruangan; ?></td>
                     <td class="text-center align-middle"><?php echo $data->peminjam->name; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->tanggal_pinjam; ?></td>
+                    <td class="text-center align-middle"><?php echo $data->tanggal_mulai; ?></td>
+                    <td class="text-center align-middle"><?php echo $data->tanggal_selesai; ?></td>
+                    <td class="text-center align-middle"><?php echo $data->jumlah_hari; ?></td>
                     <td class="text-center align-middle"><?php echo $data->petugas ? $data->petugas->name : 'Belum Diverifikasi'; ?></td>
                     <td class="text-center align-middle"><?php echo $data->status; ?></td>
                     <td class="text-center align-middle"><?php echo $data->keperluan; ?></td>
@@ -132,16 +136,6 @@
                 <p>
                     Banjarmasin,
                     <?php
-                    // Array mapping English day names to Indonesian
-                    $dayNames = [
-                        'Sunday' => 'Minggu',
-                        'Monday' => 'Senin',
-                        'Tuesday' => 'Selasa',
-                        'Wednesday' => 'Rabu',
-                        'Thursday' => 'Kamis',
-                        'Friday' => 'Jumat',
-                        'Saturday' => 'Sabtu',
-                    ];
                     // Array mapping English month names to Indonesian
                     $monthNames = [
                         'January' => 'Januari',
@@ -158,11 +152,7 @@
                         'December' => 'Desember',
                     ];
                     // Get current date and time
-                    $currentDate = date('l, d F Y');
-                    // Translate day and month names to Indonesian
-                    foreach ($dayNames as $english => $indonesian) {
-                        $currentDate = str_replace($english, $indonesian, $currentDate);
-                    }
+                    $currentDate = date('d F Y');
                     foreach ($monthNames as $english => $indonesian) {
                         $currentDate = str_replace($english, $indonesian, $currentDate);
                     }

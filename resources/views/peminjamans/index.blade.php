@@ -71,7 +71,9 @@
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 text-center uppercase bg-gray-50 border-b">
                             <th class="px-4 py-3">Nama Ruangan</th>
                             <th class="px-4 py-3">Nama Peminjam</th>
-                            <th class="px-4 py-3">Tanggal Pinjam</th>
+                            <th class="px-4 py-3">Tanggal Mulai</th>
+                            <th class="px-4 py-3">Tanggal Selesai</th>
+                            <th class="px-4 py-3">Jumlah Hari</th>
                             <th class="px-4 py-3">Status</th>
                             <th class="px-4 py-3">Action</th>
                         </tr>
@@ -86,7 +88,13 @@
                                     {{ $pinjam->peminjam->name }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ $pinjam->tanggal_pinjam }}
+                                    {{ $pinjam->tanggal_mulai }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $pinjam->tanggal_selesai }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $pinjam->jumlah_hari }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     @if ($pinjam->status == 'menunggu')

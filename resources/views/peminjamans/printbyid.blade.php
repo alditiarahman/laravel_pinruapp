@@ -89,16 +89,21 @@
 
         <div class="content">
             <div style="display: flex; justify-content: space-between;">
-                <div>Kepada Yth, <b>{{ $peminjaman->peminjam->name }}</b></div>
-                <div>Perihal: Peminjaman Ruangan</div>
+                <div>Kepada Yth, <b>Staff Kantor Bawaslu</b>
+                    <p>Di tempat</p>
+                </div>
+                <div>Nomor : <b>{{ $peminjaman->nomor_surat }}</b>
+                    <p>Perihal: Peminjaman Ruangan</p>
+                </div>
             </div>
-            <p>Di tempat</p>
 
             <p>Dengan Hormat,</p>
-            <p>Sehubung dengan perlunya sebuah tempat untuk melaksanakan sebuah kegiatan, maka dari itu saya selaku
-                Peminjam, mengajukan peminjaman Ruangan <b>{{ $peminjaman->ruangan->nama_ruangan }}</b> dari tanggal
-                <b>{{ $peminjaman->tanggal_pinjam }}</b> sampai dengan
-                dikembalikan.
+            <p>Sehubung dengan perlunya sebuah tempat untuk melaksanakan sebuah kegiatan, maka dari itu saya
+                <b>{{ $peminjaman->peminjam->name }}</b> selaku
+                Peminjam, mengajukan peminjaman Ruangan <b>{{ $peminjaman->ruangan->nama_ruangan }}</b> selama
+                <b>{{ $peminjaman->jumlah_hari }}</b> Hari, dari tanggal
+                <b>{{ $peminjaman->tanggal_mulai }}</b> sampai dengan
+                <b>{{ $peminjaman->tanggal_selesai }}</b>.
             </p>
             <p>Adapun yang bertanggung jawab dalam peminjaman ruangan tersebut adalah sebagai berikut:</p>
             <table class="table">
@@ -146,16 +151,6 @@
                 <p class="text-center align-middle">
                     Banjarmasin,
                     <?php
-                    // Array mapping English day names to Indonesian
-                    $dayNames = [
-                        'Sunday' => 'Minggu',
-                        'Monday' => 'Senin',
-                        'Tuesday' => 'Selasa',
-                        'Wednesday' => 'Rabu',
-                        'Thursday' => 'Kamis',
-                        'Friday' => 'Jumat',
-                        'Saturday' => 'Sabtu',
-                    ];
                     // Array mapping English month names to Indonesian
                     $monthNames = [
                         'January' => 'Januari',
@@ -172,11 +167,7 @@
                         'December' => 'Desember',
                     ];
                     // Get current date and time
-                    $currentDate = date('l, d F Y');
-                    // Translate day and month names to Indonesian
-                    foreach ($dayNames as $english => $indonesian) {
-                        $currentDate = str_replace($english, $indonesian, $currentDate);
-                    }
+                    $currentDate = date('d F Y');
                     foreach ($monthNames as $english => $indonesian) {
                         $currentDate = str_replace($english, $indonesian, $currentDate);
                     }

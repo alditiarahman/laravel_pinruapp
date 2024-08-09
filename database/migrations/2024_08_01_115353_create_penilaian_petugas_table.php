@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('penilaian_petugas', function (Blueprint $table) {
             $table->id();
+            $table->string('nomor_surat');
             $table->enum('pelayanan', ['fast respon', 'slow respon'])->default('fast respon');
             $table->text('saran')->nullable();
             $table->unsignedBigInteger('id_petugas');
