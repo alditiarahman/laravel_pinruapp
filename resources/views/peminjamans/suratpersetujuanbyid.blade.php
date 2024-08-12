@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Surat Peminjaman</title>
+    <title>Surat Persetujuan</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -85,27 +85,40 @@
             <hr style="border-top: 3px solid black; margin-top: 10px; margin-bottom: 10px;">
         </div>
 
-        <h1 style="text-align: center; margin-bottom: 10px;"><b>SURAT PENGAJUAN PEMINJAMAN RUANGAN</b></h1>
+        <h1 style="text-align: center; margin-bottom: 10px;"><b>SURAT PERSETUJUAN PEMINJAMAN RUANGAN</b></h1>
 
         <div class="content">
             <div style="display: flex; justify-content: space-between;">
-                <div>Kepada Yth, <b>Staff Bawaslu Provinsi Kalimantan Selatan</b>
-                    <p>Di tempat</p>
+                <div>Nomor : <b>{{ $peminjaman->nomor_surat }}</b>
+                    <br>Lampiran : -
+                    <p>Perihal : Persetujuan Peminjaman Ruangan</p>
                 </div>
-                <div>Perihal : Pengajuan Peminjaman Ruangan</b>
-                    <p>Lampiran : -</p>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <div>Kepada Yth, <b>{{ $peminjaman->peminjam->name }}</b>
+                    <p>Di tempat</p>
                 </div>
             </div>
 
-            <p>Dengan Hormat,</p>
-            <p>Sehubung dengan pengajuan Peminjaman Ruangan <b>{{ $peminjaman->ruangan->nama_ruangan }}</b> yang kami
-                ajukan, dari tanggal
-                <b>{{ \Carbon\Carbon::parse($peminjaman->tanggal_mulai)->translatedFormat('d F Y') }}</b> sampai dengan
-                <b>{{ \Carbon\Carbon::parse($peminjaman->tanggal_selesai)->translatedFormat('d F Y') }}</b> selama
-                <b>{{ $peminjaman->jumlah_hari }}</b> Hari, dan akan dipergunakan untuk Keperluan :
-                <b>{{ $peminjaman->keperluan }}</b>.
+            <p>Sehubungan dengan Pengajuan Peminjaman Ruangan yang Saudara ajukan sebelumnya untuk Keperluan
+                <b><u>{{ $peminjaman->keperluan }}</u></b>, yang akan dilaksanakan pada :
             </p>
-            <p>Adapun yang bertanggung jawab dalam peminjaman ruangan tersebut adalah sebagai berikut:</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-left align-middle">Tanggal Peminjaman</th>
+                        <td class="text-left align-middle">:
+                            {{ \Carbon\Carbon::parse($peminjaman->tanggal_mulai)->translatedFormat('d F Y') }} -
+                            {{ \Carbon\Carbon::parse($peminjaman->tanggal_selesai)->translatedFormat('d F Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th class="text-left align-middle">Tempat</th>
+                        <td class="text-left align-middle">: {{ $peminjaman->ruangan->nama_ruangan }} Bawaslu Provinsi
+                            Kalimantan Selatan</td>
+                    </tr>
+                </thead>
+            </table>
+            <p>Adapun yang bertanggung jawab dalam peminjaman ruangan tersebut adalah sebagai berikut :</p>
             <table class="table">
                 <thead>
                     <tr>
@@ -128,20 +141,10 @@
                     @endforeach
                 </tbody>
             </table>
-            <p>Dalam hal ini Peminjam berkewajiban :
-                <br>1. Memelihara dan menjaga kebersihan Aula, sampah harap dikumpulkan dan dibuang di depan kantor
-                (tempat
-                sampah di parkiran).
-                <br>2. Menjaga keamanan, ketertiban dan ketenteraman selama berlangsungnya peminjaman Aula ini.
-                <br>3. Mematikan segala peralatan elektronik yang berada di aula setelah kegiatan berlangsung ( TV LCD,
-                AC,
-                Lampu dll ).
-                <br>4. Mengembalikan peralatan aula meja dan kursi seperti semula.
-                <br>5. Saya berkewajiban memperbaiki/mengganti kerusakan, jika ada peralatan kantor di aula yang rusak
-                akibat pemakaian atas Aula tersebut dan biaya atas perbaikan tersebut sepenuhnya menjadi tanggung jawab
-                saya/ lembaga.
-            </p>
-            <p>Demikian surat pengajuan peminjaman ruangan ini dibuat. Atas waktu dan perhatian Bapak/Ibu, kami ucapkan
+            <p>Berkenaan hal tersebut, maka pengajuan yang saudara ajukan <b><u>{{ $peminjaman->status }}</u></b> oleh
+                kami.</p>
+            <p>Demikian surat persetujuan peminjaman ruangan ini dibuat. Atas waktu dan perhatian Bapak/Ibu, kami
+                ucapkan
                 terima kasih.</p>
         </div>
         <div style="margin-top: 10px;">
@@ -171,13 +174,13 @@
                     }
                     echo $currentDate;
                     ?>
-                    <br>Hormat Saya,
+                    <br>Mengetahui,
                 </p>
                 <br>
                 <br>
                 <p class="text-center align-middle">
 
-                    <b><u>{{ $peminjaman->peminjam->name }}</u></b>
+                    <b><u>Aries Mardiono, M.Sos.</u></b>
                 </p>
             </div>
         </div>

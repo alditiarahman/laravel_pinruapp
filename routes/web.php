@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('peminjamans/reject/{id}', [\App\Http\Controllers\PeminjamanController::class, 'reject'])->name('peminjamans.reject');
     Route::get('cetak-peminjaman', [\App\Http\Controllers\PdfController::class, 'peminjaman'])->name('cetak-peminjaman');
     Route::get('cetak-suratpeminjaman/{id}', [\App\Http\Controllers\PdfController::class, 'peminjamanbyid'])->name('cetak-suratpeminjaman');
+    Route::get('cetak-suratpersetujuan/{id}', [\App\Http\Controllers\PdfController::class, 'suratpersetujuanbyid'])->name('cetak-suratpersetujuan');
 });
 
 Route::middleware('auth')->group(function () {

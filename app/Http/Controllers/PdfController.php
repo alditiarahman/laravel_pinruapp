@@ -43,6 +43,18 @@ class PdfController extends Controller
         return view('peminjamans.printbyid', $data);
     }
 
+    public function suratpersetujuanbyid($id)
+    {
+        $peminjaman = Peminjaman::with(['ruangan', 'peminjam', 'petugas'])->where('id', $id)->first();
+        $peminjamandata = Peminjaman::with(['ruangan', 'peminjam', 'petugas'])->where('id', $id)->get();
+        $data = [
+            'peminjaman' => $peminjaman,
+            'peminjamandata' => $peminjamandata,
+            'tanggal' => date('d F Y'),
+        ];
+        return view('peminjamans.suratpersetujuanbyid', $data);
+    }
+
     public function pembatalan()
     {
         $pembatalan = Pembatalan::with(['peminjaman', 'peminjam'])->get();
