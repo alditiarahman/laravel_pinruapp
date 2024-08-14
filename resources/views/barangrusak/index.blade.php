@@ -99,7 +99,7 @@
                                                     clip-rule="evenodd" />
                                             </svg>
                                         </a>
-                                        <a href="{{ route('cetak-beritaacarabarangrusak', $brusak->id) }}"
+                                        <a href="{{ route('cetak-laporanbarangrusak', $brusak->id) }}"
                                             target="_blank"
                                             class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"

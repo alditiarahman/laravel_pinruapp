@@ -70,7 +70,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('barangrusak', \App\Http\Controllers\BarangRusakController::class);
     Route::get('cetak-barangrusak', [\App\Http\Controllers\PdfController::class, 'barangrusak'])->name('cetak-barangrusak');
-    Route::get('cetak-beritaacarabarangrusak/{id}', [\App\Http\Controllers\PdfController::class, 'barangrusakbyid'])->name('cetak-beritaacarabarangrusak');
+    Route::get('cetak-laporanbarangrusak/{id}', [\App\Http\Controllers\PdfController::class, 'barangrusakbyid'])->name('cetak-laporanbarangrusak');
 });
 
 Route::middleware('auth')->group(function () {

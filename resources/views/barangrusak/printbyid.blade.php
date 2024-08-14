@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Berita Acara Barang Rusak</title>
+    <title>Laporan Barang Rusak</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -77,45 +77,53 @@
         <!-- Header/Kop Surat -->
         <div class="header">
             <!-- Logo -->
-            <img src="{{ asset('images/logo-Kalsel.png') }}" alt="Logo"
-                style="width: 250px; height: auto; float: left; margin-right: 30px;">
+            <img src="{{ asset('images/logo-bawaslu.png') }}" alt="LOGO BAWASLU"
+                style="width: 100px; height: auto; float: left;">
+
+            <!-- Informasi Organisasi -->
+            <div>
+                <h2 style="font-size: 18px;"><b>Badan Pengawas Pemilihan Umum Provinsi Kalimantan Selatan</b>
+                </h2>
+                <p style="margin: 0px 0;">Jl. RE Martadinata No.3, Kertak Baru Ilir, Kec. Banjarmasin Tengah,</p>
+                <p style="margin: 0px 0;">Kota Banjarmasin, Kalimantan Selatan 70231</p>
+                <p style="margin: 0px 0;">Telepon: (0511) 6726 437 | Email: set.kalsel@gmail.go.id</p>
+            </div>
             <!-- Clearfix untuk mengatasi float -->
             <div style="clear: both;"></div>
             <br>
             <hr style="border-top: 3px solid black; margin-top: 10px; margin-bottom: 10px;">
         </div>
 
-        <h1 style="text-align: center; margin-bottom: 10px;"><b>BERITA ACARA BARANG RUSAK</b></h1>
+        <h1 style="text-align: center; margin-bottom: 10px;"><b>LAPORAN BARANG RUSAK</b></h1>
 
         <div class="content">
             <div style="display: flex; justify-content: space-between;">
                 <div>Nomor : <b>{{ $barangrusak->nomor_surat }}</b>
-                    <p>Prihal : Kerusakan Barang Fasilitas Ruangan</p>
+                    <p>Perihal : Kerusakan Barang Fasilitas Ruangan</p>
                 </div>
             </div>
-
+            <p>Dengan ini menyatakan bahwa Barang yang berada di Ruangan <b><u>{{ $barangrusak->ruangan->nama_ruangan }}</u></b> mengalami kerusakan dengan rincian sebagai berikut :</p>
             <table class="table">
                 <thead>
                     <tr>
-                        <th class="text-center align-middle">Nama Ruangan</th>
-                        <th class="text-center align-middle">Nama Barang</th>
-                        <th class="text-center align-middle">Foto Barang Rusak</th>
+                        <th class="text-left align-middle">Nama Ruangan</th>
+                        <td class="text-center align-middle">:</td>
+                        <td class="text-left align-middle">{{ $barangrusak->ruangan->nama_ruangan }}</td>
+                    </tr>
+                    <tr>
+                        <th class="text-left align-middle">Nama Barang</th>
+                        <td class="text-center align-middle">:</td>
+                        <td class="text-left align-middle">{{ $barangrusak->nama_barang }}</td>
+                    </tr>
+                    <tr>
+                        <th class="text-left align-middle">Foto Barang Rusak</th>
+                        <td class="text-center align-middle">:</td">
+                        <td class="text-left align-middle"><img src="{{ asset('storage/barangrusak/' . $barangrusak->foto_barang) }}" alt="FOTO BARANG RUSAK"
+                                width="150px" height="150px"></td>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php foreach ($barangrusakdata as $data) : ?>
-                    <tr>
-                        <td class="text-center align-middle"><?php echo $data->ruangan->nama_ruangan; ?></td>
-                        <td class="text-center align-middle"><?php echo $data->nama_barang; ?></td>
-                        <td class="text-center align-middle">
-                            <img src="{{ asset('storage/barangrusak/' . $data->foto_barang) }}" alt="FOTO BARANG RUSAK"
-                                width="100px" height="100px">
-                        </td>
-                    </tr>
-                    <?php
-        endforeach; ?>
-                </tbody>
             </table>
+            <p>Demikian Laporan Barang Rusak ini dibuat untuk digunakan sebagaimana mestinya.</p>
         </div>
         <div style="margin-top: 10px;">
             <div style="float: right; width: 40%;">
