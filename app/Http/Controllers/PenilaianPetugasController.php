@@ -120,7 +120,7 @@ class PenilaianPetugasController extends Controller
         try {
             // Find the PenilaianPetugas record by ID
             $penilaianpetugas = PenilaianPetugas::findOrFail($id);
-            $penilaianpetugas->id_petugas = Auth::user()->id;
+            $penilaianpetugas->id_petugas = $request->id_petugas;
             $penilaianpetugas->nomor_surat = $this->nomor_surat();
             $penilaianpetugas->pelayanan = $request->pelayanan;
             $penilaianpetugas->saran = $request->saran;

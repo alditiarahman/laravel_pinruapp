@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Peminjaman;
 use App\Models\Ruangan;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,8 @@ class PeminjamanController extends Controller
     public function index()
     {
         $peminjaman = Peminjaman::with(['ruangan', 'peminjam', 'petugas'])->paginate(10);
-        return view('peminjamans.index', compact('peminjaman'));
+        $user = User::all();
+        return view('peminjamans.index', compact('peminjaman', 'user'));
     }
 
     public function nomor_surat()

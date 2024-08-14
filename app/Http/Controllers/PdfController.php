@@ -6,12 +6,14 @@ use App\Models\BarangRusak;
 use App\Models\Maintenance;
 use App\Models\Pembatalan;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\User;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
 use App\Models\PenilaianPetugas;
 use App\Models\PenilaianRuangan;
 use App\Models\PerubahanJadwal;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class PdfController extends Controller
 {
@@ -24,12 +26,119 @@ class PdfController extends Controller
             'judul' => 'Laporan Riwayat Peminjaman'
         ];
 
-        $report = PDF::loadView('peminjamans.print', $data)->setPaper('A4', 'potrait');
+        $report = PDF::loadView('peminjamans.print', $data)->setPaper('A4', 'landscape');
         $nama_tgl = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('d/m/y'), 6, 2);
         $nama_jam = substr(date('d/m/y'), 0, 2) . substr(date('d/m/y'), 3, 2) . substr(date('h:i:s'), 6, 2);
 
         return $report->stream('Laporan Riwayat Peminjaman ' . $nama_tgl . '_' . $nama_jam . '.pdf');
     }
+
+    public function cetakStatus(Request $request)
+    {
+        $selected_status = $request->input('status');
+
+        // Filter pengajuan berdasarkan status yang dipilih
+        $peminjaman = Peminjaman::when($selected_status, function ($query, $selected_status) {
+            $query->where('status', $selected_status);
+        })->orderBy('id', 'desc')->get();
+
+        // Tentukan nama status yang dipilih atau default ke 'semua_status'
+        $statusNamae = $selected_status ? $selected_status : 'semua_status';
+
+        // Generate PDF
+        $pdf = Pdf::loadView('peminjamans.lapstat', compact('peminjaman', 'selected_status'))
+            ->setPaper('A4', 'landscape'); // Set paper size to A4 landscape
+
+        // Buat nama file dengan nama status yang dipilih
+        $fileName = 'laporan_peminjaman_' . $statusNamae . '.pdf';
+
+        return $pdf->stream($fileName);
+    }
+
+    public function cetakWaktu(Request $request)
+    {
+        $query = Peminjaman::query();
+
+        // Filter berdasarkan waktu
+        if ($request->has('tanggal') && $request->has('periode')) {
+            $tanggal = $request->input('tanggal');
+            $periode = $request->input('periode');
+
+            $tanggal = \Carbon\Carbon::parse($tanggal);
+
+            switch ($periode) {
+                case 'hari':
+                    $query->whereDate('tanggal_mulai', $tanggal->format('Y-m-d'))
+                    ->whereDate('tanggal_selesai', $tanggal->format('Y-m-d'));
+                    break;
+                case 'minggu':
+                    $startOfWeek = $tanggal->startOfWeek()->format('Y-m-d');
+                    $endOfWeek = $tanggal->endOfWeek()->format('Y-m-d');
+                    $query->whereBetween('tanggal_mulai', [$startOfWeek, $endOfWeek])
+                        ->whereBetween('tanggal_selesai', [$startOfWeek, $endOfWeek]);
+                    break;
+                case 'bulan':
+                    $query->whereMonth('tanggal_mulai', $tanggal->month)
+                        ->whereYear('tanggal_mulai', $tanggal->year)
+                        ->whereMonth('tanggal_selesai', $tanggal->month)
+                        ->whereYear('tanggal_selesai', $tanggal->year);
+                    break;
+                case 'tahun':
+                    $query->whereYear('tanggal_mulai', $tanggal->year)
+                        ->whereYear('tanggal_selesai', $tanggal->year);
+                    break;
+            }
+        }
+
+        $peminjaman = $query->orderBy('id', 'desc')->get();
+        $peminjam = User::all();
+
+        // Nama file PDF berdasarkan periode
+        $fileName = 'laporan_peminjaman_' . $request->input('periode') . '.pdf';
+
+        // Generate PDF
+        $pdf = Pdf::loadView('peminjamans.lapwaktu', compact('peminjaman', 'peminjam'))
+        ->setPaper('A4', 'landscape'); // Set paper size to A4 landscape
+
+        return $pdf->stream($fileName);
+    }
+
+    public function cetakPeminjaman(Request $request)
+    {
+        // Ambil ID peminjam yang dipilih dari request
+        $peminjamId = $request->input('peminjam');
+
+        // Jika peminjamId tidak ada, kembalikan semua peminjaman
+        if ($peminjamId) {
+            // Ambil data peminjam yang dipilih
+            $peminjam = User::find($peminjamId);
+
+            // Pastikan peminjam ditemukan
+            if (!$peminjam) {
+                return redirect()->back()->withErrors('Peminjam tidak ditemukan.');
+            }
+
+            // Ambil data peminjaman berdasarkan peminjam yang dipilih
+            $peminjaman = Peminjaman::where('id_peminjam', $peminjamId)->orderBy('id', 'desc')->get();
+
+            // Tentukan nama file berdasarkan nama peminjam
+            $fileName = 'laporan_peminjaman_' . $peminjam->name . '.pdf';
+        } else {
+            // Jika tidak ada peminjam yang dipilih, ambil semua peminjaman
+            $peminjaman = Peminjaman::orderBy('id', 'desc')->get();
+
+            // Nama file default jika semua peminjaman dipilih
+            $fileName = 'laporan_peminjaman_semua_peminjam.pdf';
+        }
+
+        // Load view dengan data yang diperlukan
+        $pdf = Pdf::loadView('peminjamans.lappem', compact('peminjaman'))
+        ->setPaper('A4', 'landscape'); // Set paper size to A4 landscape
+
+        // Stream PDF ke browser dengan nama file yang sesuai
+        return $pdf->stream($fileName);
+    }
+
 
     public function peminjamanbyid($id)
     {

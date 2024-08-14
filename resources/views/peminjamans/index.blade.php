@@ -41,7 +41,92 @@
         @endif
         <!-- End of alert section -->
 
-        <div class="flex space-x-2 justify-end mb-4">
+        <div class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0 md:space-x-2">
+            <form action="{{ route('cetak-lappem-peminjam') }}" method="GET" target="_blank">
+                <p class="pb-2 text-sm font-semibold text-gray-700">Laporan Riwayat Peminjaman By Peminjam
+                </p>
+                <div class="flex space-x-2">
+                    <!-- Input Label dan Select -->
+                    <div class="flex relative">
+                        <select
+                            class="block w-max text-sm bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            id="peminjam" name="peminjam">
+                            <option value="">Semua Peminjam</option>
+                            @foreach ($user as $p)
+                                <option value="{{ $p->id }}">{{ $p->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Button -->
+                    <div>
+                        <button type="submit" id="generate_pdf" name="generate_pdf"
+                            class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-500 border border-transparent rounded-lg active:bg-pruple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <form action="{{ route('cetak-laporan-status') }}" method="GET" target="_blank">
+                <p class="pb-2 text-sm font-semibold text-gray-700">Cetak Laporan Berdasarkan Status
+                </p>
+                <div class="relative flex space-x-2">
+                    <div class="flex relative">
+                        <div class="flex relative">
+                            <select id="status" name="status"
+                                class="block w-max text-sm bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                                <option value="menunggu">Pending</option>
+                                <option value="disetujui">Disetujui</option>
+                                <option value="ditolak">Ditolak</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-500 border border-transparent rounded-lg active:bg-pruple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+            <form action="{{ route('cetak-laporan-waktu') }}" method="GET" target="_blank">
+                <p class="pb-2 text-sm font-semibold text-gray-700">Cetak Laporan Berdasarkan Waktu
+                </p>
+                <div class="flex space-x-2">
+
+                    <select id="periode" name="periode"
+                        class="block w-max text-sm bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        onchange="showInput()">
+                        <option value="hari">Hari</option>
+                        <option value="minggu">Minggu</option>
+                        <option value="bulan">Bulan</option>
+                        <option value="tahun">Tahun</option>
+                    </select>
+
+                    <div id="input-container" class="block w-full">
+                        <!-- Dynamic input will be inserted here -->
+                    </div>
+                    <!-- Button -->
+                    <div>
+                        <button type="submit" id="generate_pdf" name="generate_pdf"
+                            class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-500 border border-transparent rounded-lg active:bg-pruple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="flex space-x-2 justify-end mb-4 mt-4">
             <a href="{{ route('cetak-peminjaman') }}" target="_blank"
                 class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-500 border border-transparent rounded-lg active:bg-pruple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -116,15 +201,18 @@
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     <div class="flex justify-center space-x-2 items-center">
-                                        <a href="{{ route('cetak-suratpersetujuan', $pinjam->id) }}" target="_blank"
-                                            class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="currentColor" class="size-6">
-                                                <path fill-rule="evenodd"
-                                                    d="M12 2.25a.75.75 0 0 1 .75.75v11.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 1 1 1.06-1.06l3.22 3.22V3a.75.75 0 0 1 .75-.75Zm-9 13.5a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-                                        </a>
+                                        @if ($pinjam->status == 'disetujui')
+                                            <a href="{{ route('cetak-suratpersetujuan', $pinjam->id) }}"
+                                                target="_blank"
+                                                class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    fill="currentColor" class="size-6">
+                                                    <path fill-rule="evenodd"
+                                                        d="M12 2.25a.75.75 0 0 1 .75.75v11.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 1 1 1.06-1.06l3.22 3.22V3a.75.75 0 0 1 .75-.75Zm-9 13.5a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </a>
+                                        @endif
                                         <a href="{{ route('peminjamans.show', $pinjam->id) }}"
                                             class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -159,7 +247,7 @@
                                         <!-- Modal Trigger DELETE -->
                                         <div x-data="{ openDelete: false }" class="inline">
                                             <!-- DELETE BTN -->
-                                            @if (auth()->user()->hasRole('peminjam') && ($pinjam->status === 'menunggu' || $pinjam->status === 'ditolak'))
+                                            @if (auth()->user()->hasRole('peminjam'))
                                                 <button @click="openDelete = true"
                                                     class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -396,6 +484,37 @@
                 }
             }, 3000);
         });
+    </script>
+
+    <script>
+        function showInput() {
+            const periode = document.getElementById('periode').value;
+            const inputContainer = document.getElementById('input-container');
+            let inputHTML = '';
+
+            if (periode === 'hari') {
+                inputHTML = `
+                <input type="date" name="tanggal" class="block w-max text-sm bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+            `;
+            } else if (periode === 'minggu') {
+                inputHTML = `
+                <input type="week" name="tanggal" class="block w-max text-sm bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+            `;
+            } else if (periode === 'bulan') {
+                inputHTML = `
+                <input type="month" name="tanggal" class="block w-max text-sm bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+            `;
+            } else if (periode === 'tahun') {
+                inputHTML = `
+                <input type="number" name="tanggal" min="1900" max="2100" class="block w-max text-sm bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+            `;
+            }
+
+            inputContainer.innerHTML = inputHTML;
+        }
+
+        // Initialize input based on the default selection
+        document.addEventListener('DOMContentLoaded', showInput);
     </script>
 
 </x-app-layout>

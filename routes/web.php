@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::get('cetak-peminjaman', [\App\Http\Controllers\PdfController::class, 'peminjaman'])->name('cetak-peminjaman');
     Route::get('cetak-suratpeminjaman/{id}', [\App\Http\Controllers\PdfController::class, 'peminjamanbyid'])->name('cetak-suratpeminjaman');
     Route::get('cetak-suratpersetujuan/{id}', [\App\Http\Controllers\PdfController::class, 'suratpersetujuanbyid'])->name('cetak-suratpersetujuan');
+    Route::get('cetak-laporan-status', [\App\Http\Controllers\PdfController::class, 'cetakStatus'])->name('cetak-laporan-status');
+    Route::get('cetak-laporan-waktu', [\App\Http\Controllers\PdfController::class, 'cetakWaktu'])->name('cetak-laporan-waktu');
+    Route::get('cetak-lappem-peminjam', [\App\Http\Controllers\PdfController::class, 'cetakPeminjaman'])->name('cetak-lappem-peminjam');
 });
 
 Route::middleware('auth')->group(function () {

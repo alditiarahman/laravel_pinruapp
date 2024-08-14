@@ -3,10 +3,17 @@
 
 <head>
     <meta charset="utf-8">
-    <title>{{ $judul }}</title>
+    <title>Laporan Peminjaman Per Peminjam</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
 
     <!-- Normalize or reset CSS with your favorite library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="{{ asset('/dist/js/normalize.min.css') }}">
+    <!-- Load paper.css for happy printing -->
+    <link rel="stylesheet" href="{{ asset('/css/paper.css') }}">
 
     <!-- Set page size here: A5, A4 or A3 -->
     <!-- Set also "landscape" if you need -->
@@ -29,11 +36,14 @@
 
         .header {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            width: 90%;
         }
+
 
         h1 {
             font-size: 18px;
+            text-decoration: underline;
             margin-top: 20px;
         }
 
@@ -42,7 +52,7 @@
             border-collapse: collapse;
             border-spacing: 0;
             font: normal 13px Arial, sans-serif;
-            width: 100%;
+            width: 90%;
             margin-top: 20px;
         }
 
@@ -51,7 +61,7 @@
             border: solid 1px #DDEEEE;
             color: #336B6B;
             padding: 10px;
-            text-align: center;
+            text-align: left;
             text-shadow: 1px 1px 1px #fff;
         }
 
@@ -59,74 +69,65 @@
             border: solid 1px #DDEEEE;
             color: #333;
             padding: 10px;
-            text-align: center;
             text-shadow: 1px 1px 1px #fff;
-        }
-
-        .table tbody tr {
-            page-break-inside: avoid;
-            /* Tambahkan ini */
         }
     </style>
 </head>
 
-<body>
+<body class="A4 landscape">
     <section class="sheet">
         <!-- Header/Kop Surat -->
         <div class="header">
-
             <!-- Logo -->
-            <img src="{{ public_path('images/logo-bawaslu.png') }}" alt="LOGO BAWASLU"
-                style="width: 120px; height: auto; float: left; margin-right: 30px;">
-
-            <!-- Informasi Organisasi -->
-            <div>
-                <h2 style="margin: 0; font-size: 18px;"><b>Badan Pengawas Pemilihan Umum Provinsi Kalimantan Selatan</b>
-                </h2>
-                <p style="margin: 5px 0;">Jl. RE Martadinata No.3, Kertak Baru Ilir, Kec. Banjarmasin Tengah,</p>
-                <p style="margin: 5px 0;">Kota Banjarmasin, Kalimantan Selatan 70231</p>
-                <p style="margin: 5px 0;">Telepon: (0511) 6726 437 | Email: set.kalsel@gmail.go.id</p>
-            </div>
+            <img src="{{ asset('images/logo-Kalsel.png') }}" alt="Logo"
+                style="width: 250px; height: auto; float: left; margin-right: 30px;">
             <!-- Clearfix untuk mengatasi float -->
             <div style="clear: both;"></div>
             <br>
             <hr style="border-top: 3px solid black; margin-top: 10px; margin-bottom: 10px;">
         </div>
 
-        <h1 style="text-align: center;">{{ $judul }}</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="text-center align-middle">No</th>
-                    <th class="text-center align-middle">Nama Ruangan</th>
-                    <th class="text-center align-middle">Nama Peminjam</th>
-                    <th class="text-center align-middle">Tanggal Mulai</th>
-                    <th class="text-center align-middle">Tanggal Selesai</th>
-                    <th class="text-center align-middle">Jumlah Hari</th>
-                    <th class="text-center align-middle">Disetujui Oleh</th>
-                    <th class="text-center align-middle">Status</th>
-                    <th class="text-center align-middle">Keperluan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $no = 1; ?>
-                <?php foreach ($peminjaman as $data) : ?>
-                <tr>
-                    <td class="text-center align-middle"><?php echo $no; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->ruangan->nama_ruangan; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->peminjam->name; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->tanggal_mulai; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->tanggal_selesai; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->jumlah_hari; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->petugas ? $data->petugas->name : 'Belum Diverifikasi'; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->status; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->keperluan; ?></td>
-                </tr>
+        <h1 style="text-align: center;">LAPORAN PEMINJAMAN PER PEMINJAM</h1>
+        @if ($peminjaman->isEmpty())
+            <div class="no-data">
+                <p>Data peminjaman tidak tersedia.</p>
+            </div>
+        @else
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center align-middle">No</th>
+                        <th class="text-center align-middle">Nama Ruangan</th>
+                        <th class="text-center align-middle">Nama Peminjam</th>
+                        <th class="text-center align-middle">Tanggal Mulai</th>
+                        <th class="text-center align-middle">Tanggal Selesai</th>
+                        <th class="text-center align-middle">Jumlah Hari</th>
+                        <th class="text-center align-middle">Disetujui Oleh</th>
+                        <th class="text-center align-middle">Status</th>
+                        <th class="text-center align-middle">Keperluan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $no = 1; ?>
+                    <?php foreach ($peminjaman as $data) : ?>
+                    <tr>
+                        <td class="text-center align-middle"><?php echo $no; ?></td>
+                        <td class="text-center align-middle"><?php echo $data->ruangan->nama_ruangan; ?></td>
+                        <td class="text-center align-middle"><?php echo $data->peminjam->name; ?></td>
+                        <td class="text-center align-middle"><?php echo $data->tanggal_mulai; ?></td>
+                        <td class="text-center align-middle"><?php echo $data->tanggal_selesai; ?></td>
+                        <td class="text-center align-middle"><?php echo $data->jumlah_hari; ?></td>
+                        <td class="text-center align-middle"><?php echo $data->petugas ? $data->petugas->name : 'Belum Diverifikasi'; ?></td>
+                        <td class="text-center align-middle"><?php echo $data->status; ?></td>
+                        <td class="text-center align-middle"><?php echo $data->keperluan; ?></td>
+                    </tr>
 
-                <?php $no++;
+                    <?php $no++;
         endforeach; ?>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+            </div>
+        @endif
         <div style="margin-top: 10px;">
             <div style="float: right; width: 40%;">
                 <p class="text-center align-middle">
@@ -165,7 +166,6 @@
             </div>
         </div>
     </section>
-
 </body>
 
 </html>
