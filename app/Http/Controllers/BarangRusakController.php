@@ -15,7 +15,8 @@ class BarangRusakController extends Controller
     public function index()
     {
         $barangrusak = BarangRusak::with('ruangan')->paginate(10);
-        return view('barangrusak.index', compact('barangrusak'));
+        $ruangan = Ruangan::all();
+        return view('barangrusak.index', compact('barangrusak', 'ruangan'));
     }
 
     public function nomor_surat()

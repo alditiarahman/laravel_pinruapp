@@ -12,6 +12,7 @@ use App\Models\Pengembalian;
 use App\Models\PenilaianPetugas;
 use App\Models\PenilaianRuangan;
 use App\Models\PerubahanJadwal;
+use App\Models\Ruangan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -315,5 +316,32 @@ class PdfController extends Controller
             'tanggal' => date('d F Y'),
         ];
         return view('barangrusak.printbyid', $data);
+    }
+
+    public function cetakBarangRusak(Request $request)
+    {
+        $barangrusak = BarangRusak::orderBy('id', 'desc')->get();
+        $ruangan = Ruangan::all();
+        $selected_ruangan = $request->input('selected_ruangan');
+        $ruanganId = $request->input('ruangan');
+
+        // Filter pengajuan berdasarkan divisi yang dipilih
+        $barangrusak = BarangRusak::when($ruanganId, function ($query, $ruanganId) {
+            $query->whereHas('ruangan', function ($query) use ($ruanganId) {
+                $query->where('id', $ruanganId);
+            });
+        })->orderBy('id', 'desc')->get();
+
+        // Tentukan nama divisi yang dipilih atau default ke 'semua divisi'
+        $ruanganName = $ruanganId ? Ruangan::find($ruanganId)->nama_ruangan : 'semua_ruangan';
+
+        // Generate PDF
+        $pdf = Pdf::loadView('barangrusak.hisbar', compact('barangrusak', 'ruangan', 'selected_ruangan'))
+        ->setPaper('A4', 'landscape'); // Set paper size to A4 landscape
+
+        // Buat nama file dengan nama divisi yang dipilih
+        $fileName = 'laporan_barangrusak_' . $ruanganName . '.pdf';
+
+        return $pdf->stream($fileName);
     }
 }

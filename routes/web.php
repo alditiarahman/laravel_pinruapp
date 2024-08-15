@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('barangrusak', \App\Http\Controllers\BarangRusakController::class);
     Route::get('cetak-barangrusak', [\App\Http\Controllers\PdfController::class, 'barangrusak'])->name('cetak-barangrusak');
     Route::get('cetak-laporanbarangrusak/{id}', [\App\Http\Controllers\PdfController::class, 'barangrusakbyid'])->name('cetak-laporanbarangrusak');
+    Route::get('cetak-hisbar-ruangan', [\App\Http\Controllers\PdfController::class, 'cetakBarangRusak'])->name('cetak-hisbar-ruangan');
 });
 
 Route::middleware('auth')->group(function () {
