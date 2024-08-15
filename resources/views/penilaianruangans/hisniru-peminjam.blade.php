@@ -104,7 +104,7 @@
                 <p>Data penilaian ruangan tidak tersedia.</p>
             </div>
         @else
-            <p>Dengan ini melaporkan riwayat penilaian ruangan barang berdasarkan Nama Peminjam, dengan rincian sebagai berikut :</p>
+            <p>Dengan ini melaporkan riwayat penilaian ruangan berdasarkan Nama Peminjam, dengan rincian sebagai berikut :</p>
             <table class="table">
                 <thead>
                     <tr>

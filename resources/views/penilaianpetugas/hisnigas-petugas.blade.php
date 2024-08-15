@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Laporan Riwayat Penilaian Ruangan By Ruangan</title>
+    <title>Laporan Riwayat Penilaian Petugas By Petugas</title>
 
     <!-- Normalize or reset CSS with your favorite library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
@@ -97,41 +97,38 @@
             <hr style="border-top: 3px solid black; margin-top: 10px; margin-bottom: 10px;">
         </div>
 
-        <h1 style="text-align: center;"><u>LAPORAN RIWAYAT PENILAIAN RUANGAN BERDASARKAN RUANGAN</u></h1>
+        <h1 style="text-align: center;"><u>LAPORAN RIWAYAT PENILAIAN PETUGAS BERDASARKAN PETUGAS</u></h1>
 
-        @if ($penilaianruangan->isEmpty())
+        @if ($penilaianpetugas->isEmpty())
             <div class="no-data">
-                <p>Data penilaian ruangan tidak tersedia.</p>
+                <p>Data penilaian petugas tidak tersedia.</p>
             </div>
         @else
-            <p>Dengan ini melaporkan riwayat penilaian ruangan berdasarkan Nama Ruangan, dengan rincian sebagai berikut :</p>
+            <p>Dengan ini melaporkan riwayat penilaian petugas berdasarkan Nama Petugas, dengan rincian sebagai berikut :</p>
             <table class="table">
-                <thead>
-                    <tr>
-                        <th class="text-center align-middle">No</th>
-                        <th class="text-center align-middle">Nama Ruangan</th>
-                        <th class="text-center align-middle">Nama Peminjam</th>
-                        <th class="text-center align-middle">Kebersihan</th>
-                        <th class="text-center align-middle">Kenyamanan</th>
-                        <th class="text-center align-middle">Kelengkapan Fasilitas</th>
-                        <th class="text-center align-middle">Saran</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($penilaianruangan as $data)
-                    <tr>
-                        <td class="text-center align-middle">{{ $loop->iteration }}</td>
-                        <td class="text-center align-middle">{{ $data->ruangan->nama_ruangan }}</td>
-                        <td class="text-center align-middle">{{ $data->peminjam->name }}</td>
-                        <td class="text-center align-middle">{{ $data->kebersihan }}</td>
-                        <td class="text-center align-middle">{{ $data->kenyamanan }}</td>
-                        <td class="text-center align-middle">{{ $data->kelengkapan_fasilitas }}</td>
-                        <td class="text-center align-middle">{{ $data->saran }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <p>Demikian laporan ini dibuat untuk catatan resmi terkait riwayat penilaian ruangan dan dapat digunakan sebagaimana mestinya.</p>
+            <thead>
+                <tr>
+                    <th class="text-center align-middle">No</th>
+                    <th class="text-center align-middle">Nama Petugas</th>
+                    <th class="text-center align-middle">Pelayanan</th>
+                    <th class="text-center align-middle">Saran</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $no = 1; ?>
+                <?php foreach ($penilaianpetugas as $data) : ?>
+                <tr>
+                    <td class="text-center align-middle"><?php echo $no; ?></td>
+                    <td class="text-center align-middle"><?php echo $data->petugas->name; ?></td>
+                    <td class="text-center align-middle"><?php echo $data->pelayanan; ?></td>
+                    <td class="text-center align-middle"><?php echo $data->saran; ?></td>
+                </tr>
+
+                <?php $no++;
+        endforeach; ?>
+            </tbody>
+        </table>
+            <p>Demikian laporan ini dibuat untuk catatan resmi terkait riwayat penilaian petugas dan dapat digunakan sebagaimana mestinya.</p>
             <div style="margin-top: 10px;">
                 <div class="center-align" style="float: right; width: 45%;">
                     <p>

@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('penilaianpetugas', \App\Http\Controllers\PenilaianPetugasController::class);
     Route::get('cetak-penilaianpetugas', [\App\Http\Controllers\PdfController::class, 'penilaianpetugas'])->name('cetak-penilaianpetugas');
     Route::get('cetak-beritaacarapenilaianpetugas/{id}', [\App\Http\Controllers\PdfController::class, 'penilaianpetugasbyid'])->name('cetak-beritaacarapenilaianpetugas');
+    Route::get('cetak-hisnigas-petugas', [\App\Http\Controllers\PdfController::class, 'cetakHisnigasByPetugas'])->name('cetak-hisnigas-petugas');
 });
 
 require __DIR__ . '/auth.php';

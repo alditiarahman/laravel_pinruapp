@@ -337,6 +337,42 @@ class PdfController extends Controller
         return view('penilaianpetugas.printbyid', $data);
     }
 
+    public function cetakHisnigasByPetugas(Request $request)
+    {
+        // Ambil ID petugas yang dipilih dari request
+        $petugasId = $request->input('petugas');
+
+        // Jika peminjamId tidak ada, kembalikan semua peminjaman
+        if ($petugasId) {
+            // Ambil data peminjam yang dipilih
+            $petugas = User::find($petugasId);
+
+            // Pastikan peminjam ditemukan
+            if (!$petugas) {
+                return redirect()->back()->withErrors('Petugas tidak ditemukan.');
+            }
+
+            // Ambil data peminjaman berdasarkan peminjam yang dipilih
+            $penilaianpetugas = PenilaianPetugas::where('id_petugas', $petugasId)->orderBy('id', 'desc')->get();
+
+            // Tentukan nama file berdasarkan nama peminjam
+            $fileName = 'laporan_penilaianpetugas_by_petugas_' . $petugas->name . '.pdf';
+        } else {
+            // Jika tidak ada peminjam yang dipilih, ambil semua peminjaman
+            $penilaianpetugas = PenilaianPetugas::orderBy('id', 'desc')->get();
+
+            // Nama file default jika semua peminjaman dipilih
+            $fileName = 'laporan_penilaian_petugas_semua_petugas.pdf';
+        }
+
+        // Load view dengan data yang diperlukan
+        $pdf = Pdf::loadView('penilaianpetugas.hisnigas-petugas', compact('penilaianpetugas'))
+        ->setPaper('A4', 'landscape'); // Set paper size to A4 landscape
+
+        // Stream PDF ke browser dengan nama file yang sesuai
+        return $pdf->stream($fileName);
+    }
+
     public function maintenance()
     {
         $maintenance = Maintenance::with(['ruangan'])->get();

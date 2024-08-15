@@ -20,7 +20,8 @@ class PenilaianPetugasController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(10);
         }
-        return view('penilaianpetugas.index', compact('penilaianpetugas'));
+        $user = User::all();
+        return view('penilaianpetugas.index', compact('penilaianpetugas', 'user'));
     }
 
     public function nomor_surat()
