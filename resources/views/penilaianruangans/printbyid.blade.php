@@ -111,10 +111,15 @@
                     <td class="text-center align-middle">:</td>
                     <td class="text-left align-middle">{{ $penilaianruangan->kelengkapan_fasilitas }}</td>
                 </tr>
+                <tr>
+                    <th class="text-left align-middle">Saran</th>
+                    <td class="text-center align-middle">:</td>
+                    <td class="text-left align-middle">{{ $penilaianruangan->saran }}</td>
+                </tr>
             </thead>
         </table>
         <p>Berdasarkan hasil penilaian dari Ruangan <b><u>{{ $penilaianruangan->ruangan->nama_ruangan }}</u></b>. Penilaian ini dilakukan secara objektif sesuai dengan standar dan prosedur yang berlaku.</p>
-        Demikian berita acara penilaian ruangan ini dibuat untuk digunakan sebagaimana mestinya.
+        <p>Demikian berita acara penilaian ruangan ini dibuat untuk digunakan sebagaimana mestinya.</p>
         </div>
         <div style="margin-top: 10px;">
             <div style="float: right; width: 40%;">

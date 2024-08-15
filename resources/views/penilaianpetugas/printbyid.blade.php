@@ -90,30 +90,31 @@
         <div class="content">
             <div style="display: flex; justify-content: space-between;">
                 <div>Nomor : <b>{{ $penilaianpetugas->nomor_surat }}</b>
-                    <p>Prihal : Penilaian Petugas</p>
+                    <p>Perihal : Penilaian Petugas</p>
                 </div>
             </div>
-
+            <p>Dengan ini menyatakan bahwa Petugas telah dinilai dengan detail penilaian sebagai berikut :</p>
             <table class="table">
             <thead>
                 <tr>
-                    <th class="text-center align-middle">Nama Petugas</th>
-                    <th class="text-center align-middle">Pelayanan</th>
-                    <th class="text-center align-middle">Saran</th>
+                    <th class="text-left align-middle">Nama Petugas</th>
+                    <td class="text-center align-middle">:</td>
+                    <td class="text-left align-middle">{{ $penilaianpetugas->petugas->name }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left align-middle">Pelayanan</th>
+                    <td class="text-center align-middle">:</td>
+                    <td class="text-left align-middle">{{ $penilaianpetugas->pelayanan }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left align-middle">Saran</th>
+                    <td class="text-center align-middle">:</td>
+                    <td class="text-left align-middle">{{ $penilaianpetugas->saran }}</td>
                 </tr>
             </thead>
-            <tbody>
-                <?php foreach ($penilaianpetugasdata as $data) : ?>
-                <tr>
-                    <td class="text-center align-middle"><?php echo $data->petugas->name; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->pelayanan; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->saran; ?></td>
-                </tr>
-
-                <?php
-        endforeach; ?>
-            </tbody>
         </table>
+        <p>Berdasarkan hasil Penilaian Petugas diatas. Penilaian ini dilakukan secara objektif sesuai dengan standar dan prosedur yang berlaku.</p>
+        <p>Demikian berita acara penilaian petugas ini dibuat untuk digunakan sebagaimana mestinya.</p>
         </div>
         <div style="margin-top: 10px;">
             <div style="float: right; width: 40%;">
