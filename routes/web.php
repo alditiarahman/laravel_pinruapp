@@ -83,6 +83,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('penilaianruangans', \App\Http\Controllers\PenilaianRuanganController::class);
     Route::get('cetak-penilaianruangan', [\App\Http\Controllers\PdfController::class, 'penilaianruangan'])->name('cetak-penilaianruangan');
     Route::get('cetak-beritaacarapenilaianruangan/{id}', [\App\Http\Controllers\PdfController::class, 'penilaianruanganbyid'])->name('cetak-beritaacarapenilaianruangan');
+    Route::get('cetak-hisniru-ruangan', [\App\Http\Controllers\PdfController::class, 'cetakHisniruByRuangan'])->name('cetak-hisniru-ruangan');
+    Route::get('cetak-hisniru-peminjam', [\App\Http\Controllers\PdfController::class, 'cetakHisniruByPeminjam'])->name('cetak-hisniru-peminjam');
 });
 
 Route::middleware('auth')->group(function () {

@@ -90,29 +90,31 @@
         <div class="content">
             <div style="display: flex; justify-content: space-between;">
                 <div>Nomor : <b>{{ $penilaianruangan->nomor_surat }}</b>
-                    <p>Prihal : Penilaian Ruangan</p>
+                    <p>Perihal : Penilaian Ruangan</p>
                 </div>
             </div>
-
+            <p>Dengan ini menyatakan bahwa saya <b><u>{{ $penilaianruangan->peminjam->name }}</u></b> telah melakukan penilaian terhadap Ruangan <b><u>{{ $penilaianruangan->ruangan->nama_ruangan }}</u></b> dengan detail penilaian sebagai berikut :</p>
             <table class="table">
             <thead>
                 <tr>
-                    <th class="text-center align-middle">Nama Ruangan</th>
-                    <th class="text-center align-middle">Nama Peminjam</th>
-                    <th class="text-center align-middle">Saran</th>
+                    <th class="text-left align-middle">Kebersihan</th>
+                    <td class="text-center align-middle">:</td>
+                    <td class="text-left align-middle">{{ $penilaianruangan->kebersihan }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left align-middle">Kenyamanan</th>
+                    <td class="text-center align-middle">:</td>
+                    <td class="text-left align-middle">{{ $penilaianruangan->kenyamanan }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left align-middle">Kelengkapan Fasilitas</th>
+                    <td class="text-center align-middle">:</td>
+                    <td class="text-left align-middle">{{ $penilaianruangan->kelengkapan_fasilitas }}</td>
                 </tr>
             </thead>
-            <tbody>
-                <?php foreach ($penilaianruangandata as $data) : ?>
-                <tr>
-                    <td class="text-center align-middle"><?php echo $data->ruangan->nama_ruangan; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->peminjam->name; ?></td>
-                    <td class="text-center align-middle"><?php echo $data->saran; ?></td>
-                </tr>
-                <?php
-        endforeach; ?>
-            </tbody>
         </table>
+        <p>Berdasarkan hasil penilaian dari Ruangan <b><u>{{ $penilaianruangan->ruangan->nama_ruangan }}</u></b>. Penilaian ini dilakukan secara objektif sesuai dengan standar dan prosedur yang berlaku.</p>
+        Demikian berita acara penilaian ruangan ini dibuat untuk digunakan sebagaimana mestinya.
         </div>
         <div style="margin-top: 10px;">
             <div style="float: right; width: 40%;">
@@ -141,13 +143,13 @@
                     }
                     echo $currentDate;
                     ?>
-                    <br>Yang Mengetahui
+                    <br>Hormat Saya,
                 </p>
                 <br>
                 <br>
                 <p class="text-center align-middle">
 
-                    <b><u>Aries Mardiono, M.Sos</u></b>
+                    <b><u>{{ $penilaianruangan->peminjam->name }}</u></b>
                 </p>
             </div>
         </div>

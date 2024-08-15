@@ -24,7 +24,7 @@
         }
 
         .sheet {
-            padding: 15mm;
+            padding: 5mm;
         }
 
         .header {
@@ -81,10 +81,10 @@
 
             <!-- Logo -->
             <img src="{{ public_path('images/logo-bawaslu.png') }}" alt="LOGO BAWASLU"
-                style="width: 120px; height: auto; float: left; margin-right: 30px;">
+                style="width: 120px; height: auto; float: left;">
 
             <!-- Informasi Organisasi -->
-            <div class="left-align">
+            <div class="center-align">
                 <h2 style="margin: 0; font-size: 18px;"><b>Badan Pengawas Pemilihan Umum Provinsi Kalimantan Selatan</b>
                 </h2>
                 <p style="margin: 5px 0;">Jl. RE Martadinata No.3, Kertak Baru Ilir, Kec. Banjarmasin Tengah,</p>
@@ -128,7 +128,7 @@
             </tbody>
         </table>
         <div style="margin-top: 20px;">
-            <div class="left-align" style="float: right; width: 45%;">
+            <div class="center-align" style="float: right; width: 45%;">
                 <p>
                     Banjarmasin,
                     <?php

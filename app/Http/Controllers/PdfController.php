@@ -246,6 +246,69 @@ class PdfController extends Controller
         return view('penilaianruangans.printbyid', $data);
     }
 
+    public function cetakHisniruByRuangan(Request $request)
+    {
+        $penilaianruangan = PenilaianRuangan::orderBy('id', 'desc')->get();
+        $ruangan = Ruangan::all();
+        $selected_ruangan = $request->input('selected_ruangan');
+        $ruanganId = $request->input('ruangan');
+
+        // Filter pengajuan berdasarkan divisi yang dipilih
+        $penilaianruangan = PenilaianRuangan::when($ruanganId, function ($query, $ruanganId) {
+            $query->whereHas('ruangan', function ($query) use ($ruanganId) {
+                $query->where('id', $ruanganId);
+            });
+        })->orderBy('id', 'desc')->get();
+
+        // Tentukan nama divisi yang dipilih atau default ke 'semua divisi'
+        $ruanganName = $ruanganId ? Ruangan::find($ruanganId)->nama_ruangan : 'semua_ruangan';
+
+        // Generate PDF
+        $pdf = Pdf::loadView('penilaianruangans.hisniru-ruangan', compact('penilaianruangan', 'ruangan', 'selected_ruangan'))
+        ->setPaper('A4', 'landscape'); // Set paper size to A4 landscape
+
+        // Buat nama file dengan nama divisi yang dipilih
+        $fileName = 'laporan_penilaianruangan_by_ruangan_' . $ruanganName . '.pdf';
+
+        return $pdf->stream($fileName);
+    }
+
+    public function cetakHisniruByPeminjam(Request $request)
+    {
+        // Ambil ID peminjam yang dipilih dari request
+        $peminjamId = $request->input('peminjam');
+
+        // Jika peminjamId tidak ada, kembalikan semua peminjaman
+        if ($peminjamId) {
+            // Ambil data peminjam yang dipilih
+            $peminjam = User::find($peminjamId);
+
+            // Pastikan peminjam ditemukan
+            if (!$peminjam) {
+                return redirect()->back()->withErrors('Peminjam tidak ditemukan.');
+            }
+
+            // Ambil data peminjaman berdasarkan peminjam yang dipilih
+            $penilaianruangan = PenilaianRuangan::where('id_peminjam', $peminjamId)->orderBy('id', 'desc')->get();
+
+            // Tentukan nama file berdasarkan nama peminjam
+            $fileName = 'laporan_penilaianruangan_by_peminjam_' . $peminjam->name . '.pdf';
+        } else {
+            // Jika tidak ada peminjam yang dipilih, ambil semua peminjaman
+            $penilaianruangan = PenilaianRuangan::orderBy('id', 'desc')->get();
+
+            // Nama file default jika semua peminjaman dipilih
+            $fileName = 'laporan_penilaian_ruangan_semua_peminjam.pdf';
+        }
+
+        // Load view dengan data yang diperlukan
+        $pdf = Pdf::loadView('penilaianruangans.hisniru-peminjam', compact('penilaianruangan'))
+        ->setPaper('A4', 'landscape'); // Set paper size to A4 landscape
+
+        // Stream PDF ke browser dengan nama file yang sesuai
+        return $pdf->stream($fileName);
+    }
+
     public function penilaianpetugas()
     {
         $penilaianpetugas = PenilaianPetugas::with(['petugas'])->get();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PenilaianRuangan;
 use App\Models\Ruangan;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PenilaianRuanganController extends Controller
@@ -24,7 +25,9 @@ class PenilaianRuanganController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(10);
         }
-        return view('penilaianruangans.index', compact('penilaianruangan'));
+        $ruangan = Ruangan::all();
+        $user = User::all();
+        return view('penilaianruangans.index', compact('penilaianruangan', 'ruangan', 'user'));
     }
 
     public function nomor_surat()
