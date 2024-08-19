@@ -24,21 +24,26 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('about', 'about')->name('about');
-
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::patch('/users/{id}/makeAdmin', [UserController::class, 'makeAdmin'])->name('users.makeAdmin');
+    Route::patch('/users/{id}/makeOperator', [UserController::class, 'makeOperator'])->name('users.makeOperator');
+    Route::patch('/users/{id}/makePeminjam', [UserController::class, 'makePeminjam'])->name('users.makePeminjam');
+});
+
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::resource('ruangans', \App\Http\Controllers\RuanganController::class);
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin|operator|peminjam'])->group(function () {
     Route::resource('peminjamans', \App\Http\Controllers\PeminjamanController::class);
     Route::patch('peminjamans/verify/{id}', [\App\Http\Controllers\PeminjamanController::class, 'verify'])->name('peminjamans.verify');
     Route::patch('peminjamans/reject/{id}', [\App\Http\Controllers\PeminjamanController::class, 'reject'])->name('peminjamans.reject');
@@ -67,7 +72,7 @@ Route::middleware('auth')->group(function () {
     Route::get('cetak-perubahanjadwal', [\App\Http\Controllers\PdfController::class, 'perubahanjadwal'])->name('cetak-perubahanjadwal');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin|peminjam'])->group(function () {
     Route::resource('barangrusak', \App\Http\Controllers\BarangRusakController::class);
     Route::get('cetak-barangrusak', [\App\Http\Controllers\PdfController::class, 'barangrusak'])->name('cetak-barangrusak');
     Route::get('cetak-laporanbarangrusak/{id}', [\App\Http\Controllers\PdfController::class, 'barangrusakbyid'])->name('cetak-laporanbarangrusak');
@@ -79,7 +84,7 @@ Route::middleware('auth')->group(function () {
     Route::get('cetak-maintenance', [\App\Http\Controllers\PdfController::class, 'maintenance'])->name('cetak-maintenance');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin|peminjam'])->group(function () {
     Route::resource('penilaianruangans', \App\Http\Controllers\PenilaianRuanganController::class);
     Route::get('cetak-penilaianruangan', [\App\Http\Controllers\PdfController::class, 'penilaianruangan'])->name('cetak-penilaianruangan');
     Route::get('cetak-beritaacarapenilaianruangan/{id}', [\App\Http\Controllers\PdfController::class, 'penilaianruanganbyid'])->name('cetak-beritaacarapenilaianruangan');
@@ -87,7 +92,7 @@ Route::middleware('auth')->group(function () {
     Route::get('cetak-hisniru-peminjam', [\App\Http\Controllers\PdfController::class, 'cetakHisniruByPeminjam'])->name('cetak-hisniru-peminjam');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin|peminjam'])->group(function () {
     Route::resource('penilaianpetugas', \App\Http\Controllers\PenilaianPetugasController::class);
     Route::get('cetak-penilaianpetugas', [\App\Http\Controllers\PdfController::class, 'penilaianpetugas'])->name('cetak-penilaianpetugas');
     Route::get('cetak-beritaacarapenilaianpetugas/{id}', [\App\Http\Controllers\PdfController::class, 'penilaianpetugasbyid'])->name('cetak-beritaacarapenilaianpetugas');

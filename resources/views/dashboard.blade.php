@@ -29,6 +29,7 @@
                 </div>
             </a>
             <!-- Barang Rusak Button -->
+            @if (auth()->user()->hasAnyRole(['admin', 'peminjam']))
             <a href="{{ route('barangrusak.index') }}"
                 class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-white">
                 <div
@@ -53,7 +54,9 @@
                     </p>
                 </div>
             </a>
+            @endif
             <!-- Nilai Ruangan Button -->
+            @if (auth()->user()->hasAnyRole(['admin', 'peminjam']))
             <a href="{{ route('penilaianruangans.index') }}"
                 class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-white">
                 <div
@@ -78,7 +81,9 @@
                     </p>
                 </div>
             </a>
+            @endif
             <!-- Nilai Petugas Button -->
+            @if (auth()->user()->hasAnyRole(['admin', 'peminjam']))
             <a href="{{ route('penilaianpetugas.index') }}"
                 class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-white">
                 <div
@@ -103,6 +108,7 @@
                     </p>
                 </div>
             </a>
+            @endif
         </div>
     </div>
 </x-app-layout>
