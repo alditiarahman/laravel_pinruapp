@@ -93,6 +93,7 @@
                 <p>Data peminjaman tidak tersedia.</p>
             </div>
         @else
+        <p>Berikut ini adalah Laporan Riwayat Peminjaman Ruangan yang telah dipinjam berdasarkan periode dan telah sesuai dengan prosedur yang <br>berlaku.</p>
             <table class="table">
                 <thead>
                     <tr>
@@ -102,7 +103,7 @@
                         <th class="text-center align-middle">Tanggal Mulai</th>
                         <th class="text-center align-middle">Tanggal Selesai</th>
                         <th class="text-center align-middle">Jumlah Hari</th>
-                        <th class="text-center align-middle">Disetujui Oleh</th>
+                        <th class="text-center align-middle">Verifikator</th>
                         <th class="text-center align-middle">Status</th>
                         <th class="text-center align-middle">Keperluan</th>
                     </tr>
@@ -126,6 +127,7 @@
         endforeach; ?>
                 </tbody>
             </table>
+            <p>Laporan ini dibuat sebagai catatan riwayat peminjaman ruangan dan dapat digunakan sebagaimana mestinya.</p>
             </div>
         @endif
         <div style="margin-top: 10px;">

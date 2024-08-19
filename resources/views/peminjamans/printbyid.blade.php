@@ -129,16 +129,16 @@
                 </tbody>
             </table>
             <p>Dalam hal ini Peminjam berkewajiban :
-                <br>1. Memelihara dan menjaga kebersihan Aula, sampah harap dikumpulkan dan dibuang di depan kantor
+                <br>1. Memelihara dan menjaga kebersihan Ruangan, sampah harap dikumpulkan dan dibuang di depan kantor
                 (tempat
                 sampah di parkiran).
-                <br>2. Menjaga keamanan, ketertiban dan ketenteraman selama berlangsungnya peminjaman Aula ini.
-                <br>3. Mematikan segala peralatan elektronik yang berada di aula setelah kegiatan berlangsung ( TV LCD,
+                <br>2. Menjaga keamanan, ketertiban dan ketenteraman selama berlangsungnya peminjaman ruangan ini.
+                <br>3. Mematikan segala peralatan elektronik yang berada di ruangan setelah kegiatan berlangsung ( TV LCD,
                 AC,
                 Lampu dll ).
-                <br>4. Mengembalikan peralatan aula meja dan kursi seperti semula.
-                <br>5. Saya berkewajiban memperbaiki/mengganti kerusakan, jika ada peralatan kantor di aula yang rusak
-                akibat pemakaian atas Aula tersebut dan biaya atas perbaikan tersebut sepenuhnya menjadi tanggung jawab
+                <br>4. Mengembalikan peralatan ruangan meja dan kursi seperti semula.
+                <br>5. Saya berkewajiban memperbaiki/mengganti kerusakan, jika ada peralatan kantor di ruangan yang rusak
+                akibat pemakaian atas ruangan tersebut dan biaya atas perbaikan tersebut sepenuhnya menjadi tanggung jawab
                 saya/ lembaga.
             </p>
             <p>Demikian surat pengajuan peminjaman ruangan ini dibuat. Atas waktu dan perhatian Bapak/Ibu, kami ucapkan
@@ -182,9 +182,9 @@
             </div>
         </div>
     </section>
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         window.print();
-    </script>
+    </script> --}}
 </body>
 
 </html>

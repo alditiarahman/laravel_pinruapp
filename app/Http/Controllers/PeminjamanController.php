@@ -76,6 +76,22 @@ class PeminjamanController extends Controller
             'keperluan' => 'required',
         ]);
 
+        // Check if the room is already booked for the given dates
+        $existingBooking = Peminjaman::where('id_ruangan', $request->id_ruangan)
+            ->where(function ($query) use ($request) {
+                $query->whereBetween('tanggal_mulai', [$request->tanggal_mulai, $request->tanggal_selesai])
+                    ->orWhereBetween('tanggal_selesai', [$request->tanggal_mulai, $request->tanggal_selesai])
+                    ->orWhere(function ($query) use ($request) {
+                        $query->where('tanggal_mulai', '<=', $request->tanggal_mulai)
+                            ->where('tanggal_selesai', '>=', $request->tanggal_selesai);
+                    });
+            })
+            ->exists();
+
+        if ($existingBooking) {
+            return redirect()->back()->withErrors(['id_ruangan' => 'Ruangan ini sudah dipinjam pada tanggal yang Anda pilih.']);
+        }
+
         $peminjaman = new Peminjaman();
         $peminjaman->id_ruangan = $request->id_ruangan;
         $peminjaman->id_peminjam = auth()->id();
@@ -133,13 +149,30 @@ class PeminjamanController extends Controller
             'keperluan' => 'required',
         ]);
 
-        // Find the existing Peminjaman by ID
+        // Fetch the existing booking record
         $peminjaman = Peminjaman::findOrFail($id);
 
-        // Update the fields
+        // Check if the room is already booked for the given dates, excluding the current booking
+        $existingBooking = Peminjaman::where('id_ruangan', $request->id_ruangan)
+            ->where('id', '!=', $id) // Exclude the current booking
+            ->where(function ($query) use ($request) {
+                $query->whereBetween('tanggal_mulai', [$request->tanggal_mulai, $request->tanggal_selesai])
+                    ->orWhereBetween('tanggal_selesai', [$request->tanggal_mulai, $request->tanggal_selesai])
+                    ->orWhere(function ($query) use ($request) {
+                        $query->where('tanggal_mulai', '<=', $request->tanggal_mulai)
+                            ->where('tanggal_selesai', '>=', $request->tanggal_selesai);
+                    });
+            })
+            ->exists();
+
+        if ($existingBooking) {
+            return redirect()->back()->withErrors(['id_ruangan' => 'Ruangan ini sudah dipinjam pada tanggal yang Anda pilih.']);
+        }
+
+        // Update the booking details
         $peminjaman->id_ruangan = $request->id_ruangan;
-        $peminjaman->id_peminjam = auth()->id(); // Assuming you want to keep the same peminjam
-        $peminjaman->nomor_surat = $this->nomor_surat(); // Assuming the nomor_surat might be recalculated
+        $peminjaman->id_peminjam = auth()->id();
+        $peminjaman->nomor_surat = $this->nomor_surat();
         $peminjaman->tanggal_mulai = $request->tanggal_mulai;
         $peminjaman->tanggal_selesai = $request->tanggal_selesai;
         $peminjaman->nama_pj = $request->nama_pj;
@@ -148,9 +181,8 @@ class PeminjamanController extends Controller
         $peminjaman->nomor_identitas = $request->nomor_identitas;
         $peminjaman->nomor_telepon = $request->nomor_telepon;
         $peminjaman->keperluan = $request->keperluan;
-        $peminjaman->jumlah_hari = $peminjaman->calculateJumlahHari(); // Recalculate the jumlah_hari based on new dates
+        $peminjaman->jumlah_hari = $peminjaman->calculateJumlahHari();
 
-        // Save the changes
         if ($peminjaman->save()) {
             return redirect()->route('peminjamans.index')->with('success', 'Peminjaman berhasil diperbarui');
         } else {

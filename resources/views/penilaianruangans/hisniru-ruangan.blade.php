@@ -78,19 +78,9 @@
     <section class="sheet">
         <!-- Header/Kop Surat -->
         <div class="header">
-
             <!-- Logo -->
-            <img src="{{ public_path('images/logo-bawaslu.png') }}" alt="LOGO BAWASLU"
-                style="width: 120px; height: auto; float: left;">
-
-            <!-- Informasi Organisasi -->
-            <div class="center-align">
-                <h2 style="margin-top: 15px; font-size: 18px;"><b>Badan Pengawas Pemilihan Umum Provinsi Kalimantan Selatan</b>
-                </h2>
-                <p style="margin: 5px 0;">Jl. RE Martadinata No.3, Kertak Baru Ilir, Kec. Banjarmasin Tengah,</p>
-                <p style="margin: 5px 0;">Kota Banjarmasin, Kalimantan Selatan 70231</p>
-                <p style="margin: 5px 0;">Telepon: (0511) 6726 437 | Email: set.kalsel@gmail.go.id</p>
-            </div>
+            <img src="{{ asset('images/logo-Kalsel.png') }}" alt="Logo"
+                style="width: 250px; height: auto; float: left;">
             <!-- Clearfix untuk mengatasi float -->
             <div style="clear: both;"></div>
             <br>

@@ -136,7 +136,7 @@
                             <th class="text-center align-middle">Nama Peminjam</th>
                             <th class="text-center align-middle">Tanggal Mulai</th>
                             <th class="text-center align-middle">Tanggal Selesai</th>
-                            <th class="text-center align-middle">Disetujui Oleh</th>
+                            <th class="text-center align-middle">Verifikator</th>
                             <th class="text-center align-middle">Keperluan</th>
                         </tr>
                     </thead>
@@ -166,12 +166,7 @@
                     </p>
                 @endif
                 @if ($peminjaman->contains('status', 'ditolak'))
-                    <p>Harap diperhatikan bahwa setiap penolakan disertai dengan catatan atau alasan yang relevan, yang
-                        dapat digunakan sebagai acuan untuk
-                        <br> perbaikan atau tindakan lebih lanjut. Kami mendorong agar catatan tersebut diperhatikan
-                        dengan seksama guna memastikan kualitas
-                        <br> dan kelengkapan peminjaman di masa mendatang.
-                    </p>
+                    <p>Berdasarkan data peminjaman ditolak diatas, diharapkan laporan ini dapat digunakan sebagaimana mestinya.</p>
                 @endif
                 @if ($peminjaman->contains('status', 'menunggu'))
                     <p>Kami menghargai kesabaran Anda dalam menunggu proses ini dan akan memberikan informasi lebih
