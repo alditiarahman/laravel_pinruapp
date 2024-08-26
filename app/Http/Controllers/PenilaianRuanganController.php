@@ -15,19 +15,18 @@ class PenilaianRuanganController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->hasRole('peminjam') || Auth::user()->hasRole('admin')) {
-            $penilaianruangan = PenilaianRuangan::with('ruangan')
+        if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('operator')) {
+            $penilaianruangan = PenilaianRuangan::with('ruangan', 'peminjam')
                 ->orderBy('id', 'desc')
                 ->paginate(10);
         } else {
-            $penilaianruangan = PenilaianRuangan::with('user')
+            $penilaianruangan = PenilaianRuangan::with('ruangan', 'peminjam')
                 ->where('id_peminjam', Auth::user()->id)
                 ->orderBy('id', 'desc')
                 ->paginate(10);
         }
-        $ruangan = Ruangan::all();
         $user = User::all();
-        return view('penilaianruangans.index', compact('penilaianruangan', 'ruangan', 'user'));
+        return view('penilaianruangans.index', compact('penilaianruangan', 'user'));
     }
 
     public function nomor_surat()

@@ -16,7 +16,16 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        $peminjaman = Peminjaman::with(['ruangan', 'peminjam', 'petugas'])->paginate(10);
+        if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('operator')) {
+            $peminjaman = Peminjaman::with(['ruangan', 'peminjam', 'petugas'])
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+        } else {
+            $peminjaman = Peminjaman::with(['ruangan', 'peminjam', 'petugas'])
+                ->where('id_peminjam', Auth::user()->id)
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+        }
         $user = User::all();
         return view('peminjamans.index', compact('peminjaman', 'user'));
     }
