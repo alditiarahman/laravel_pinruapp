@@ -60,7 +60,7 @@
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 text-center uppercase bg-gray-50 border-b">
                             <th class="px-4 py-3">Nama Ruangan</th>
                             <th class="px-4 py-3">Kapasitas</th>
-                            <th class="px-4 py-3">Fasilitas</th>
+                            <th class="px-4 py-3">Fasilitas & Jumlah</th>
                             <th class="px-4 py-3">Action</th>
                         </tr>
                     </thead>
@@ -73,8 +73,19 @@
                                 <td class="px-4 py-3 text-sm">
                                     {{ $ruangan->kapasitas }}
                                 </td>
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $ruangan->fasilitas }}
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    @php
+                                        $fasilitasArray = json_decode($ruangan->fasilitas, true) ?? [];
+                                    @endphp
+                                    @if (is_array($fasilitasArray) && count($fasilitasArray) > 0)
+                                        <ul>
+                                            @foreach ($fasilitasArray as $fasilitas)
+                                                <li>{{ $fasilitas[0] }} - {{ $fasilitas[1] }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p class="text-gray-500">Tidak ada fasilitas</p>
+                                    @endif
                                 </td>
                                 <td class="px-4 py-3 text-sm flex justify-center items-center space-x-2">
                                     <a href="{{ route('ruangans.show', $ruangan->id) }}"

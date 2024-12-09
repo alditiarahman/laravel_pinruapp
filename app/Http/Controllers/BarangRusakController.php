@@ -62,27 +62,46 @@ class BarangRusakController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
             'id_ruangan' => 'required',
             'nama_barang' => 'required',
-            'foto_barang' => 'required',
+            'jumlah' => 'required|integer|min:1',
+            'foto_barang' => 'required|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        // Upload image
-        $image = $request->file('foto_barang');
-        $image->storeAs('public/barangrusak', $image->hashName());
+        // Ambil ruangan berdasarkan id_ruangan
+        $ruangan = Ruangan::find($request->id_ruangan);
+        $fasilitas = json_decode($ruangan->fasilitas, true); // Decode fasilitas JSON
 
-        $barangrusak = new BarangRusak();
-        $barangrusak->id_ruangan = $request->id_ruangan;
-        $barangrusak->nomor_surat = $this->nomor_surat();
-        $barangrusak->nama_barang = $request->nama_barang;
-        $barangrusak->foto_barang = $image->hashName();
-
-        if ($barangrusak->save()) {
-            return redirect()->route('barangrusak.index')->with('success', 'Barang Rusak created successfully.');
-        } else {
-            return redirect()->route('barangrusak.index')->with('error', 'Failed to create Barang Rusak.');
+        // Cari fasilitas yang sesuai dengan nama_barang yang diinput
+        $fasilitasDitemukan = false;
+        foreach ($fasilitas as &$f) {
+            if ($f[0] === $request->nama_barang) {
+                // Kurangi jumlah fasilitas jika lebih besar dari 0
+                if ($f[1] > 0) {
+                    $f[1] -= 1;
+                    $fasilitasDitemukan = true;
+                }
+                break;
+            }
         }
+
+        // Update fasilitas pada ruangan jika barang ditemukan
+        if ($fasilitasDitemukan) {
+            $ruangan->fasilitas = json_encode($fasilitas); // Encode fasilitas kembali ke JSON
+            $ruangan->save();
+        }
+
+        // Simpan data barang rusak
+        $barangRusak = new BarangRusak();
+        $barangRusak->id_ruangan = $request->id_ruangan;
+        $barangRusak->nama_barang = $request->nama_barang;
+        $barangRusak->nomor_surat = $this->nomor_surat();
+        $barangRusak->foto_barang = $request->file('foto_barang')->store('barang_rusak', 'public'); // Simpan foto
+        $barangRusak->save();
+
+        return redirect()->route('barangrusak.index')->with('success', 'Data barang rusak berhasil ditambahkan.');
     }
 
     /**
@@ -108,35 +127,59 @@ class BarangRusakController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $barangrusak = BarangRusak::find($id);
-
+        // Validasi input
         $request->validate([
             'id_ruangan' => 'required',
             'nama_barang' => 'required',
+            'jumlah' => 'required|integer|min:1',
+            'foto_barang' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
+        // Ambil data barang rusak yang ada
+        $barangRusak = BarangRusak::findOrFail($id);
+        $ruangan = Ruangan::find($request->id_ruangan);
+        $fasilitas = json_decode($ruangan->fasilitas, true); // Decode fasilitas JSON
+
+        // Cari fasilitas yang sesuai dengan nama_barang yang diinput
+        $fasilitasDitemukan = false;
+        foreach ($fasilitas as &$f) {
+            if ($f[0] === $request->nama_barang) {
+                // Kurangi jumlah fasilitas jika lebih besar dari 0
+                if ($f[1] > 0) {
+                    $f[1] -= 1;
+                    $fasilitasDitemukan = true;
+                }
+                break;
+            }
+        }
+
+        // Update fasilitas pada ruangan jika barang ditemukan
+        if ($fasilitasDitemukan) {
+            $ruangan->fasilitas = json_encode($fasilitas); // Encode fasilitas kembali ke JSON
+            $ruangan->save();
+        }
+
+        // Update data barang rusak
+        $barangRusak->id_ruangan = $request->id_ruangan;
+        $barangRusak->nama_barang = $request->nama_barang;
+        $barangRusak->nomor_surat = $this->nomor_surat();
+
+        // Jika ada foto baru, simpan dan ganti yang lama
         if ($request->hasFile('foto_barang')) {
-            // Delete old image
-            Storage::disk('public')->delete('barangrusak/' . basename($barangrusak->foto_barang));
-
-            // Upload new image
-            $image = $request->file('foto_barang');
-            $image->storeAs('public/barangrusak', $image->hashName());
-            $barangrusak->foto_barang = $image->hashName();
+            // Hapus foto lama jika ada
+            if ($barangRusak->foto_barang) {
+                Storage::disk('public')->delete($barangRusak->foto_barang);
+            }
+            $barangRusak->foto_barang = $request->file('foto_barang')->store('barang_rusak', 'public');
         }
 
-        $barangrusak->id_ruangan = $request->id_ruangan;
-        $barangrusak->nama_barang = $request->nama_barang;
+        $barangRusak->save();
 
-        // Save the updated data
-        if ($barangrusak->save()) {
-            return redirect()->route('barangrusak.index')->with('success', 'Data barang rusak berhasil diubah');
-        } else {
-            return redirect()->route('barangrusak.index')->with('error', 'Data barang rusak gagal diubah');
-        }
+        return redirect()->route('barangrusak.index')->with('success', 'Data barang rusak berhasil diperbarui.');
     }
+
 
     /**
      * Remove the specified resource from storage.

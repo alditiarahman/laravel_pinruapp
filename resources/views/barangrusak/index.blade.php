@@ -118,7 +118,7 @@
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     <div class="flex justify-center items-center">
-                                        <img src="{{ asset('storage/barangrusak/' . $brusak->foto_barang) }}"
+                                        <img src="{{ asset('storage/' . $brusak->foto_barang) }}"
                                             alt="{{ $brusak->foto_barang }}" class="h-28 w-28 object-cover">
                                     </div>
                                 </td>

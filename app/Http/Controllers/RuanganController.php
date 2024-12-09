@@ -29,22 +29,21 @@ class RuanganController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_ruangan' => 'required',
-            'kapasitas' => 'required',
-            'fasilitas' => 'required',
+        $data = $request->validate([
+            'nama_ruangan' => 'required|string',
+            'kapasitas' => 'required|integer',
+            'fasilitas' => 'required|array',
+            'jumlah' => 'required|array',
         ]);
 
-        $ruangans = new Ruangan();
-        $ruangans->nama_ruangan = $request->nama_ruangan;
-        $ruangans->kapasitas = $request->kapasitas;
-        $ruangans->fasilitas = $request->fasilitas;
+        // Combine fasilitas and jumlah into a JSON array or any other structure as needed
+        $ruangan = new Ruangan();
+        $ruangan->nama_ruangan = $data['nama_ruangan'];
+        $ruangan->kapasitas = $data['kapasitas'];
+        $ruangan->fasilitas = json_encode(array_map(null, $data['fasilitas'], $data['jumlah']));
+        $ruangan->save();
 
-        if ($ruangans->save()) {
-            return redirect()->route('ruangans.index')->with('success', 'Ruangan created successfully.');
-        } else {
-            return redirect()->route('ruangans.index')->with('error', 'Failed to create ruangan.');
-        }
+        return redirect()->route('ruangans.index')->with('success', 'Data Ruangan berhasil disimpan');
     }
 
     /**
@@ -68,25 +67,25 @@ class RuanganController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $ruangans = Ruangan::findOrFail($id);
-
-        $request->validate([
-            'nama_ruangan' => 'required',
-            'kapasitas' => 'required',
-            'fasilitas' => 'required',
+        $data = $request->validate([
+            'nama_ruangan' => 'required|string',
+            'kapasitas' => 'required|integer',
+            'fasilitas' => 'required|array',
+            'jumlah' => 'required|array',
         ]);
 
-        $ruangans->nama_ruangan = $request->nama_ruangan;
-        $ruangans->kapasitas = $request->kapasitas;
-        $ruangans->fasilitas = $request->fasilitas;
+        // Find the existing ruangan by ID
+        $ruangan = Ruangan::findOrFail($id);
 
-        if ($ruangans->save()) {
-            return redirect()->route('ruangans.index')->with('success', 'Ruangan updated successfully.');
-        } else {
-            return redirect()->route('ruangans.index')->with('error', 'Failed to update ruangan.');
-        }
+        // Update the fields with validated data
+        $ruangan->nama_ruangan = $data['nama_ruangan'];
+        $ruangan->kapasitas = $data['kapasitas'];
+        $ruangan->fasilitas = json_encode(array_map(null, $data['fasilitas'], $data['jumlah']));
+        $ruangan->save();
+
+        return redirect()->route('ruangans.index')->with('success', 'Data Ruangan berhasil diperbarui');
     }
 
     /**
