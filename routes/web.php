@@ -90,6 +90,8 @@ Route::middleware(['auth', 'verified', 'role:admin|peminjam'])->group(function (
     Route::get('cetak-beritaacarapenilaianruangan/{id}', [\App\Http\Controllers\PdfController::class, 'penilaianruanganbyid'])->name('cetak-beritaacarapenilaianruangan');
     Route::get('cetak-hisniru-ruangan', [\App\Http\Controllers\PdfController::class, 'cetakHisniruByRuangan'])->name('cetak-hisniru-ruangan');
     Route::get('cetak-hisniru-peminjam', [\App\Http\Controllers\PdfController::class, 'cetakHisniruByPeminjam'])->name('cetak-hisniru-peminjam');
+    Route::get('/penilairanruangans/ruangans/{id}', [\App\Http\Controllers\PenilaianRuanganController::class, 'ruanganNilai'])->name('penilaianruangans.nilai');
+    Route::post('penilaianruangans', [\App\Http\Controllers\PenilaianRuanganController::class, 'nilaiRuangan'])->name('penilaianruangans.nilaiRuangan');
 });
 
 Route::middleware(['auth', 'verified', 'role:admin|peminjam'])->group(function () {
@@ -97,6 +99,8 @@ Route::middleware(['auth', 'verified', 'role:admin|peminjam'])->group(function (
     Route::get('cetak-penilaianpetugas', [\App\Http\Controllers\PdfController::class, 'penilaianpetugas'])->name('cetak-penilaianpetugas');
     Route::get('cetak-beritaacarapenilaianpetugas/{id}', [\App\Http\Controllers\PdfController::class, 'penilaianpetugasbyid'])->name('cetak-beritaacarapenilaianpetugas');
     Route::get('cetak-hisnigas-petugas', [\App\Http\Controllers\PdfController::class, 'cetakHisnigasByPetugas'])->name('cetak-hisnigas-petugas');
+    Route::get('/penilaianpetugas/petugas/{id}', [\App\Http\Controllers\PenilaianPetugasController::class, 'petugasNilai'])->name('penilaianpetugas.nilai');
+    Route::post('penilaianpetugas', [\App\Http\Controllers\PenilaianPetugasController::class, 'nilaiPetugas'])->name('penilaianpetugas.nilaiPetugas');
 });
 
 require __DIR__ . '/auth.php';

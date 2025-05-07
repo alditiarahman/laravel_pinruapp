@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PenilaianRuangan;
 use App\Models\Ruangan;
 use App\Models\User;
+use App\Models\Peminjaman;
 use Illuminate\Support\Facades\Auth;
 
 class PenilaianRuanganController extends Controller
@@ -158,6 +159,46 @@ class PenilaianRuanganController extends Controller
             return redirect()->route('penilaianruangans.index')->with('success', 'Penilaian Ruangan deleted successfully.');
         } catch (\Exception $e) {
             return redirect()->route('penilaianruangans.index')->with('error', 'Failed to delete penilaian ruangan: ' . $e->getMessage());
+        }
+    }
+
+    public function ruanganNilai($id)
+    {
+        // Retrieve the 'peminjaman' based on the ID
+        $pinjam = Peminjaman::findOrFail($id);
+
+        // Get the petugas associated with this peminjaman
+        $ruangan = $pinjam->ruangan; // This will return the petugas (user)
+
+        // Return the view with the necessary data
+        return view('penilaianruangans.nilai', compact('pinjam', 'ruangan'));
+    }
+
+    public function nilaiRuangan(Request $request)
+    {
+        $request->validate([
+            'id_ruangan' => 'required',
+            'kebersihan' => 'required',
+            'kenyamanan' => 'required',
+            'kelengkapan_fasilitas' => 'required',
+            'saran' => 'nullable',
+        ]);
+
+        try {
+            $penilaianruangan = new PenilaianRuangan();
+            $penilaianruangan->id_ruangan = $request->id_ruangan;
+            $penilaianruangan->id_peminjam = Auth::user()->id;
+            $penilaianruangan->nomor_surat = $this->nomor_surat();
+            $penilaianruangan->kebersihan = $request->kebersihan;
+            $penilaianruangan->kenyamanan = $request->kenyamanan;
+            $penilaianruangan->kelengkapan_fasilitas = $request->kelengkapan_fasilitas;
+            $penilaianruangan->saran = $request->saran;
+            $penilaianruangan->id_peminjamen = $request->id_peminjamen;
+            $penilaianruangan->save();
+
+            return redirect()->route('penilaianruangans.index')->with('success', 'Penilaian Ruangan created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('penilaianruangans.index')->with('error', 'Failed to create penilaian ruangan: ' . $e->getMessage());
         }
     }
 }

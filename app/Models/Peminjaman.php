@@ -34,4 +34,13 @@ class Peminjaman extends Model
         return $startDate->diffInDays($endDate) + 1; // Adding 1 to include both start and end dates
     }
 
+    public function penilaianRuangan()
+    {
+        return $this->hasOne(PenilaianRuangan::class, 'id_peminjamen');
+    }
+
+    public function penilaianPetugas()
+    {
+        return $this->hasOne(PenilaianPetugas::class, 'id_peminjamen');
+    }
 }

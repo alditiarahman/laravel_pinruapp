@@ -136,7 +136,9 @@
                             <th class="px-4 py-3">Kebersihan</th>
                             <th class="px-4 py-3">Kenyamanan</th>
                             <th class="px-4 py-3">Kelengkapan Fasilitas</th>
-                            <th class="px-4 py-3">Action</th>
+                            @if (auth()->user()->hasRole('admin'))
+                                <th class="px-4 py-3">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y">
@@ -202,19 +204,19 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <div class="flex justify-center items-center space-x-2">
-                                        <a href="{{ route('penilaianruangans.show', $nilairuangan->id) }}"
-                                            class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="currentColor" class="size-6">
-                                                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                                <path fill-rule="evenodd"
-                                                    d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-                                        </a>
-                                        @if (auth()->user()->hasRole('admin'))
+                                @if (auth()->user()->hasRole('admin'))
+                                    <td class="px-4 py-3 text-sm">
+                                        <div class="flex justify-center items-center space-x-2">
+                                            <a href="{{ route('penilaianruangans.show', $nilairuangan->id) }}"
+                                                class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                    fill="currentColor" class="size-6">
+                                                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                                                    <path fill-rule="evenodd"
+                                                        d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </a>
                                             <a href="{{ route('cetak-beritaacarapenilaianruangan', $nilairuangan->id) }}"
                                                 target="_blank"
                                                 class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
@@ -227,8 +229,6 @@
                                                         d="M14.25 5.25a5.23 5.23 0 0 0-1.279-3.434 9.768 9.768 0 0 1 6.963 6.963A5.23 5.23 0 0 0 16.5 7.5h-1.875a.375.375 0 0 1-.375-.375V5.25Z" />
                                                 </svg>
                                             </a>
-                                        @endif
-                                        @if (auth()->user()->hasRole('peminjam'))
                                             <a href="{{ route('penilaianruangans.edit', $nilairuangan->id) }}"
                                                 class="px-1 py-2 text-sm font-medium leading-5 text-purple-500 transition-colors duration-150 border border-transparent rounded-lg active:text-purple-600 hover:text-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -237,8 +237,6 @@
                                                         d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
                                                 </svg>
                                             </a>
-                                        @endif
-                                        @if (auth()->user()->hasRole('peminjam'))
                                             <form action="{{ route('penilaianruangans.destroy', $nilairuangan->id) }}"
                                                 method="POST" class="inline">
                                                 @csrf
@@ -254,9 +252,9 @@
                                                     </svg>
                                                 </button>
                                             </form>
-                                        @endif
-                                    </div>
-                                </td>
+                                        </div>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

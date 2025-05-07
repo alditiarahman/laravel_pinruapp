@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PenilaianPetugas;
 use App\Models\User;
+use App\Models\Peminjaman;
 
 class PenilaianPetugasController extends Controller
 {
@@ -142,5 +143,39 @@ class PenilaianPetugasController extends Controller
         } else {
             return redirect()->route('penilaianpetugas.index')->with('error', 'Data penilaian petugas gagal dihapus');
         }
+    }
+
+    public function petugasNilai($id)
+    {
+        // Retrieve the 'peminjaman' based on the ID
+        $pinjam = Peminjaman::findOrFail($id);
+
+        // Get the petugas associated with this peminjaman
+        $petugas = $pinjam->petugas; // This will return the petugas (user)
+
+        // Return the view with the necessary data
+        return view('penilaianpetugas.nilai', compact('pinjam', 'petugas'));
+    }
+
+    public function nilaiPetugas(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'id_petugas' => 'required|exists:users,id',
+            'pelayanan' => 'required|string',
+            'saran' => 'nullable|string',
+        ]);
+
+        // Create a new evaluation for the petugas
+        $penilaianPetugas = new PenilaianPetugas();
+        $penilaianPetugas->id_petugas = $request->id_petugas;
+        $penilaianPetugas->nomor_surat = $this->nomor_surat();
+        $penilaianPetugas->pelayanan = $request->pelayanan;
+        $penilaianPetugas->saran = $request->saran;
+        $penilaianPetugas->id_peminjamen = $request->id_peminjamen;
+        $penilaianPetugas->save();
+
+        // Redirect with success message
+        return redirect()->route('penilaianpetugas.index')->with('success', 'Penilaian berhasil disimpan!');
     }
 }
